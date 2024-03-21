@@ -11,6 +11,8 @@ import { MatStepperModule } from "@angular/material/stepper";
 import { NavbarComponent } from './navbar/navbar.component';
 import { HoverButtonComponent} from './hover-button/hover-button.component';
 import { SidebarComponent } from './navbar/sidebar/sidebar.component';
+import { HoverInfoComponent } from './hover-info/hover-info.component';
+import { InfographicComponent } from './infographic/infographic.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,9 @@ import { SidebarComponent } from './navbar/sidebar/sidebar.component';
     ModalWrapperComponent,
     NavbarComponent,
     HoverButtonComponent,
-    SidebarComponent
+    SidebarComponent,
+    HoverInfoComponent,
+    InfographicComponent
   ],
   imports: [
     BrowserModule,
