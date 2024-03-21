@@ -10,4 +10,10 @@ import { MatSelectModule } from "@angular/material/select";
   templateUrl: './plant-sappling.component.html',
   styleUrls: ['./plant-sappling.component.scss'],
 })
-export class PlantSapplingComponent {}
+export class PlantSapplingComponent {
+  foods = [
+    {value: 'steak-0', viewValue: 'Steak'},
+    {value: 'pizza-1', viewValue: 'Pizza'},
+    {value: 'tacos-2', viewValue: 'Tacos'},
+  ];
+}
