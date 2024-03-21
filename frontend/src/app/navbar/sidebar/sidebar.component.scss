@@ -1,0 +1,35 @@
+.sidebar {
+  width: 250px;
+  height: 100%;
+  background-color: #333;
+  color: #fff;
+  transition: width 0.3s ease;
+}
+
+.sidebar.collapsed {
+  width: 50px;
+}
+
+.sidebar ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.sidebar li {
+  padding: 10px;
+}
+
+.sidebar a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.sidebar button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  background-color: #444;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}

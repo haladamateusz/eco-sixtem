@@ -8,11 +8,17 @@ import { ModalWrapperComponent } from './modal-wrapper/modal-wrapper.component';
 import { MatDialogModule } from "@angular/material/dialog";
 import { MatButtonModule } from "@angular/material/button";
 import { MatStepperModule } from "@angular/material/stepper";
+import { NavbarComponent } from './navbar/navbar.component';
+import { HoverButtonComponent} from './hover-button/hover-button.component';
+import { SidebarComponent } from './navbar/sidebar/sidebar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ModalWrapperComponent
+    ModalWrapperComponent,
+    NavbarComponent,
+    HoverButtonComponent,
+    SidebarComponent
   ],
   imports: [
     BrowserModule,
