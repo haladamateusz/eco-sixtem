@@ -1,0 +1,26 @@
+@import './fonts.scss';
+
+$red-palette: (
+  50: #fbe7e3,
+  100: #f5c4ba,
+  200: #ef9c8c,
+  300: #e8745e,
+  400: #e3573c,
+  500: #de3919,
+  600: #da3316,
+  700: #d52c12,
+  800: #d1240e,
+  900: #c81708,
+  contrast: (
+    50: $dark-primary-text,
+    100: $dark-primary-text,
+    200: $dark-primary-text,
+    300: $dark-primary-text,
+    400: $light-primary-text,
+    500: $light-primary-text,
+    600: $light-primary-text,
+    700: $light-primary-text,
+    800: $light-primary-text,
+    900: $light-primary-text
+  )
+);

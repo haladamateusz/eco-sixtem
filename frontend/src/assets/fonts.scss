@@ -1,0 +1,10 @@
+$dark-primary-text: rgba(black, 0.87);
+$light-primary-text: white;
+
+.text-white {
+  color: $light-primary-text !important;
+}
+
+.text-black {
+  color: $dark-primary-text !important;
+}
