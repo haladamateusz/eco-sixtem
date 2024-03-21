@@ -9,8 +9,37 @@
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
 </head>
+<!-- <app-navbar></app-navbar> -->
+<header>
+  <div class="nav-container">
+      <div class="logo">
+        <img src="assets/six_logo.svg" alt="Logo">
+      </div>
+    <div class="nav-buttons">
+      <button class="button-with-logo">
+        <img src="assets/globe.svg" alt="Logo" class="logo">
+        <span class="text">Ecosystem</span>
+      </button>
+      <button class="button-with-logo">
+        <img src="assets/star.svg" alt="Logo" class="logo">
+        <span class="text">Leaderboard</span>
+      </button>
+    </div>
+  </div>
+</header>
 <body class="mat-typography">
-  <app-root></app-root>
+  <div class="main-container">
+    <button class="sidebar-button">
+      <img src="assets/list.svg" alt="Logo" class="logo">
+    </button>
+    <div class="main-content">
+      <app-root></app-root>
+      <app-sidebar></app-sidebar>
+      <router-outlet></router-outlet>
+    </div>
 </body>
+
+
 </html>
