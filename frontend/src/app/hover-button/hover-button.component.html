@@ -3,7 +3,7 @@
 </button> -->
 
 
-<button class="hover-button" (mouseenter)="toggleHover(true)" (mouseleave)="toggleHover(false)">
+<button class="hover-button" (click)="buttonClicked.emit()" (mouseenter)="toggleHover(true)" (mouseleave)="toggleHover(false)">
   <img src="assets/leaf.svg" alt="Logo" class="logo" style="height: 20px;">
   <span class="text">Plant Sapling</span>
 </button>

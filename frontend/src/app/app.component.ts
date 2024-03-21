@@ -8,6 +8,11 @@ import {
   ViewChild,
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { HoverButtonComponent } from "./hover-button/hover-button.component";
+import { InfographicComponent } from "./infographic/infographic.component";
+import { HoverInfoComponent } from "./hover-info/hover-info.component";
+import { ModalWrapperComponent } from "./modal-wrapper/modal-wrapper.component";
+import { PlantSapplingComponent } from "./plant-sappling/plant-sappling.component";
 
 interface Cloud {
   posX: number;
@@ -18,7 +23,7 @@ interface Cloud {
 interface Tree {
   posX: number;
   posY: number;
-  polluted: boolean;
+  state: 'dead' | 'dying' | 'healthy';
 }
 
 interface Animal {
@@ -31,7 +36,9 @@ interface Animal {
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
+  standalone: true,
   styleUrls: ['./app.component.scss'],
+  imports: [HoverButtonComponent, InfographicComponent, HoverInfoComponent],
 })
 export class AppComponent implements OnInit, AfterViewInit {
   cdr = inject(ChangeDetectorRef);
@@ -60,167 +67,167 @@ export class AppComponent implements OnInit, AfterViewInit {
     {
       posY: Math.floor(Math.random() * 65) + 30,
       posX: Math.floor(Math.random() * 35) + 30,
-      polluted: true,
+      state: 'healthy',
     },
     {
       posY: Math.floor(Math.random() * 65) + 100,
       posX: Math.floor(Math.random() * 35) + 100,
-      polluted: true,
+      state: 'healthy',
     },
     {
       posY: Math.floor(Math.random() * 65) + 100,
       posX: Math.floor(Math.random() * 35) + 200,
-      polluted: true,
+      state: 'healthy',
     },
     {
       posY: Math.floor(Math.random() * 65) + 50,
       posX: Math.floor(Math.random() * 65) + 400,
-      polluted: true,
+      state: 'healthy',
     },
     {
       posY: Math.floor(Math.random() * 65) + 80,
       posX: Math.floor(Math.random() * 65) + 500,
-      polluted: true,
+      state: 'healthy',
     },
     {
       posY: Math.floor(Math.random() * 65) + 60,
       posX: Math.floor(Math.random() * 65) + 600,
-      polluted: false,
+      state: 'healthy',
     },
     {
       posY: Math.floor(Math.random() * 65) + 40,
       posX: Math.floor(Math.random() * 65) + 800,
-      polluted: false,
+      state: 'healthy',
     },
     {
       posY: Math.floor(Math.random() * 65) + 50,
       posX: Math.floor(Math.random() * 65) + 1100,
-      polluted: false,
+      state: 'healthy',
     },
     {
       posY: Math.floor(Math.random() * 65) + 80,
-      posX: Math.floor(Math.random() * 65) + 1200,
-      polluted: false,
+      posX: Math.floor(Math.random() * 65) + 777,
+      state: 'healthy',
     },
     {
       posY: Math.floor(Math.random() * 65) + 20,
-      posX: Math.floor(Math.random() * 65) + 1300,
-      polluted: false,
+      posX: Math.floor(Math.random() * 65) + 342,
+      state: 'healthy',
     },
     {
       posY: Math.floor(Math.random() * 35) + 30,
-      posX: Math.floor(Math.random() * 65) + 1400,
-      polluted: false,
+      posX: Math.floor(Math.random() * 65) + 675,
+      state: 'healthy',
     },
     {
       posY: Math.floor(Math.random() * 35) + 130,
       posX: Math.floor(Math.random() * 35) + 30,
-      polluted: true,
+      state: 'healthy',
     },
     {
       posY: Math.floor(Math.random() * 65) + 200,
       posX: Math.floor(Math.random() * 35) + 100,
-      polluted: true,
+      state: 'healthy',
     },
     {
       posY: Math.floor(Math.random() * 65) + 200,
       posX: Math.floor(Math.random() * 65) + 200,
-      polluted: true,
+      state: 'healthy',
     },
     {
       posY: Math.floor(Math.random() * 65) + 150,
       posX: Math.floor(Math.random() * 65) + 400,
-      polluted: true,
+      state: 'dead',
     },
     {
       posY: Math.floor(Math.random() * 65) + 180,
       posX: Math.floor(Math.random() * 65) + 500,
-      polluted: true,
+      state: 'healthy',
     },
     {
       posY: Math.floor(Math.random() * 65) + 160,
       posX: Math.floor(Math.random() * 65) + 600,
-      polluted: false,
+      state: 'healthy',
     },
     {
       posY: Math.floor(Math.random() * 65) + 140,
       posX: Math.floor(Math.random() * 65) + 800,
-      polluted: false,
+      state: 'dead',
     },
     {
       posY: Math.floor(Math.random() * 65) + 150,
       posX: Math.floor(Math.random() * 65) + 1100,
-      polluted: false,
+      state: 'dying',
     },
     {
       posY: Math.floor(Math.random() * 65) + 180,
       posX: Math.floor(Math.random() * 65) + 1200,
-      polluted: false,
+      state: 'dead',
     },
     {
       posY: Math.floor(Math.random() * 65) + 120,
-      posX: Math.floor(Math.random() * 65) + 1300,
-      polluted: false,
+      posX: Math.floor(Math.random() * 65) + 543,
+      state: 'dead',
     },
     {
       posY: Math.floor(Math.random() * 65) + 130,
-      posX: Math.floor(Math.random() * 65) + 1400,
-      polluted: false,
+      posX: Math.floor(Math.random() * 65) + 345,
+      state: 'dying',
     },
     {
       posY: Math.floor(Math.random() * 65) + 230,
       posX: Math.floor(Math.random() * 65) + 30,
-      polluted: true,
+      state: 'healthy',
     },
     {
       posY: Math.floor(Math.random() * 65) + 300,
       posX: Math.floor(Math.random() * 65) + 100,
-      polluted: true,
+      state: 'dying',
     },
     {
       posY: Math.floor(Math.random() * 65) + 300,
       posX: Math.floor(Math.random() * 65) + 200,
-      polluted: true,
+      state: 'healthy',
     },
     {
       posY: Math.floor(Math.random() * 65) + 250,
       posX: Math.floor(Math.random() * 65) + 400,
-      polluted: true,
+      state: 'dying',
     },
     {
       posY: Math.floor(Math.random() * 65) + 280,
       posX: Math.floor(Math.random() * 65) + 500,
-      polluted: true,
+      state: 'dying',
     },
     {
       posY: Math.floor(Math.random() * 65) + 260,
       posX: Math.floor(Math.random() * 65) + 600,
-      polluted: false,
+      state: 'dying',
     },
     {
       posY: Math.floor(Math.random() * 65) + 240,
       posX: Math.floor(Math.random() * 65) + 800,
-      polluted: false,
+      state: 'healthy',
     },
     {
       posY: Math.floor(Math.random() * 65) + 250,
       posX: Math.floor(Math.random() * 65) + 1100,
-      polluted: false,
+      state: 'dying',
     },
     {
       posY: Math.floor(Math.random() * 65) + 280,
       posX: Math.floor(Math.random() * 65) + 1200,
-      polluted: false,
+      state: 'healthy',
     },
     {
       posY: Math.floor(Math.random() * 65) + 220,
       posX: Math.floor(Math.random() * 65) + 1300,
-      polluted: false,
+      state: 'dying',
     },
     {
       posY: Math.floor(Math.random() * 65) + 230,
-      posX: Math.floor(Math.random() * 65) + 14300,
-      polluted: false,
+      posX: Math.floor(Math.random() * 65) + 1400,
+      state: 'dead',
     },
   ];
 
@@ -275,13 +282,13 @@ export class AppComponent implements OnInit, AfterViewInit {
     },
     {
       posY: Math.floor(Math.random() * 65) + 80,
-      posX: Math.floor(Math.random() * 65) + 1200,
+      posX: Math.floor(Math.random() * 65) + 456,
       dead: false,
       animalType: 'dog',
     },
     {
       posY: Math.floor(Math.random() * 65) + 20,
-      posX: Math.floor(Math.random() * 65) + 1300,
+      posX: Math.floor(Math.random() * 65) + 347,
       dead: false,
       animalType: 'cat',
     },
@@ -347,13 +354,13 @@ export class AppComponent implements OnInit, AfterViewInit {
     },
     {
       posY: Math.floor(Math.random() * 65) + 120,
-      posX: Math.floor(Math.random() * 65) + 1300,
+      posX: Math.floor(Math.random() * 65) + 834,
       dead: false,
       animalType: 'dog',
     },
     {
       posY: Math.floor(Math.random() * 65) + 130,
-      posX: Math.floor(Math.random() * 65) + 1400,
+      posX: Math.floor(Math.random() * 65) + 934,
       dead: false,
       animalType: 'cow',
     },
@@ -413,13 +420,13 @@ export class AppComponent implements OnInit, AfterViewInit {
     },
     {
       posY: Math.floor(Math.random() * 65) + 220,
-      posX: Math.floor(Math.random() * 65) + 1300,
+      posX: Math.floor(Math.random() * 65) + 1050,
       dead: false,
       animalType: 'cat',
     },
     {
       posY: Math.floor(Math.random() * 65) + 230,
-      posX: Math.floor(Math.random() * 65) + 14300,
+      posX: Math.floor(Math.random() * 65) + 1200,
       dead: false,
       animalType: 'cow',
     },
@@ -436,31 +443,31 @@ export class AppComponent implements OnInit, AfterViewInit {
   @ViewChild('animals', { static: true }) animals!: ElementRef;
 
   ngOnInit() {
-    // if (!localStorage.getItem('isFirstVisit')) {
-    //   localStorage.setItem('siteVisited', 'true');
-    //   this.dialog.open(ModalWrapperComponent, {
-    //     minWidth: 600,
-    //     maxWidth: 600,
-    //     minHeight: 300,
-    //   });
-    // }
+    if (!localStorage.getItem('isFirstVisit')) {
+      localStorage.setItem('siteVisited', 'true');
+      this.dialog.open(ModalWrapperComponent, {
+        minWidth: 600,
+        maxWidth: 600,
+        minHeight: 300,
+      });
+    }
   }
 
   ngAfterViewInit() {
-    this.sky.nativeElement.width = window.innerWidth - 4;
-    this.sky.nativeElement.height = window.innerHeight - 15;
+    this.sky.nativeElement.width = window.innerWidth - 447;
+    this.sky.nativeElement.height = window.innerHeight - 215;
 
-    this.clouds.nativeElement.width = window.innerWidth - 4;
-    this.clouds.nativeElement.height = window.innerHeight - 15;
+    this.clouds.nativeElement.width = window.innerWidth - 447;
+    this.clouds.nativeElement.height = window.innerHeight - 215;
 
-    this.terrain.nativeElement.width = window.innerWidth - 4;
-    this.terrain.nativeElement.height = window.innerHeight - 15;
+    this.terrain.nativeElement.width = window.innerWidth - 447;
+    this.terrain.nativeElement.height = window.innerHeight - 215;
 
-    this.trees.nativeElement.width = window.innerWidth - 4;
-    this.trees.nativeElement.height = window.innerHeight - 15;
+    this.trees.nativeElement.width = window.innerWidth - 447;
+    this.trees.nativeElement.height = window.innerHeight - 215;
 
-    this.animals.nativeElement.width = window.innerWidth - 4;
-    this.animals.nativeElement.height = window.innerHeight - 15;
+    this.animals.nativeElement.width = window.innerWidth - 447;
+    this.animals.nativeElement.height = window.innerHeight - 215;
 
     this.drawSky();
     this.drawClouds();
@@ -474,7 +481,11 @@ export class AppComponent implements OnInit, AfterViewInit {
     const canvas = this.sky.nativeElement;
     const ctx = canvas.getContext('2d');
     if (ctx) {
-      ctx.fillStyle = 'deepskyblue';
+      const grd = ctx.createLinearGradient(0, 0, canvas.width, 0);
+      grd.addColorStop(0, 'deepskyblue');
+      grd.addColorStop(1, '#87CEEB');
+      // ctx.fillStyle = 'deepskyblue';
+      ctx.fillStyle = grd;
       ctx.fillRect(0, 0, canvas.width, 200);
     }
   }
@@ -531,25 +542,42 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   drawTerrain() {
+    const grass = new Image();
+    grass.src = '../assets/grass3.jpg';
     const canvas = this.terrain.nativeElement;
     const ctx = canvas.getContext('2d');
-    if (ctx) {
-      ctx.fillStyle = '#90EE90';
-      ctx.fillRect(0, 200, canvas.width, 700);
-    }
+
+    grass.onload = () => {
+      var pat = ctx.createPattern(grass, 'repeat');
+      ctx.fillStyle = pat;
+      ctx.rect(0, 200, canvas.width, 700);
+      ctx.fill();
+    };
   }
 
   drawTrees() {
     const happyTree = new Image();
     happyTree.src = '../assets/happy_tree.png';
 
-    const pollutedTree = new Image();
-    pollutedTree.src = '../assets/sad_tree.png';
+    const dyingTree = new Image();
+    dyingTree.src = '../assets/dying_tree.png';
+
+    const deadTree = new Image();
+    deadTree.src = '../assets/sad_tree.png';
 
     const canvas = this.trees.nativeElement;
     const ctx = canvas.getContext('2d');
 
     Promise.all([
+      () => {
+        return () => {
+          dyingTree.height = 80;
+          dyingTree.width = 80;
+          dyingTree.onload = () => {
+            Promise.resolve(dyingTree);
+          };
+        };
+      },
       () => {
         return () => {
           happyTree.height = 80;
@@ -561,18 +589,30 @@ export class AppComponent implements OnInit, AfterViewInit {
       },
       () => {
         return () => {
-          pollutedTree.height = 80;
-          pollutedTree.width = 80;
-          pollutedTree.onload = () => {
-            Promise.resolve(pollutedTree);
+          deadTree.height = 80;
+          deadTree.width = 80;
+          deadTree.onload = () => {
+            Promise.resolve(deadTree);
           };
         };
       },
     ]).then(() => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       this.treesData.forEach((tree) => {
+        let treeToRender: any = '';
+        switch (tree.state) {
+          case 'healthy':
+            treeToRender = happyTree;
+            break;
+          case 'dying':
+            treeToRender = dyingTree;
+            break;
+          case 'dead':
+            treeToRender = deadTree;
+            break;
+        }
         ctx.drawImage(
-          tree.polluted ? pollutedTree : happyTree,
+          treeToRender,
           0,
           0,
           339,
@@ -665,10 +705,10 @@ export class AppComponent implements OnInit, AfterViewInit {
           let animalWidth = 300;
 
           if (animal.animalType === 'cow') {
-            animalWidth = 497
+            animalWidth = 497;
           }
           if (animal.animalType === 'dog') {
-            animalWidth = 337
+            animalWidth = 337;
           }
 
           ctx.drawImage(
@@ -679,7 +719,7 @@ export class AppComponent implements OnInit, AfterViewInit {
             300,
             animal.dead ? animal.posX : animal.posX + offsetX,
             animal.dead ? animal.posY + 200 : animal.posY + offsetY + 200,
-            animalWidth/12,
+            animalWidth / 12,
             25,
           );
         });
@@ -688,6 +728,10 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   test($event: any) {
-    console.log($event);
+    this.dialog.open(PlantSapplingComponent, {
+      minWidth: 600,
+      maxWidth: 600,
+      minHeight: 300,
+    });
   }
 }

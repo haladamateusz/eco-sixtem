@@ -3,6 +3,7 @@
 // For more information: https://material.angular.io/guide/theming
 @use '@angular/material' as mat;
 // Plus imports for other components in your app.
+@import "bootstrap-icons/font/bootstrap-icons.css";
 @import './assets/primary';
 // Include the common styles for Angular Material. We include this here so that you only
 // have to load a single css file for Angular Material in your app.
@@ -62,8 +63,6 @@ h1 {
   flex-direction: row;
   height: 100%;
   // background-color: red;
-  padding: 10px;
-  margin: 10px;
   border-color: white;
   // font-family: vt323;
 }

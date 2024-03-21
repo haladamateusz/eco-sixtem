@@ -1,20 +1,38 @@
-<div class = "canvas-container" style="position: relative;">
-  <!-- <canvas #clouds
-          style="position: absolute; left: 0; top: 0; z-index: 2; margin-top: 20px;"></canvas>
-  <canvas #sky
-          style="position: absolute; left: 0; top: 0; z-index: 1; border-radius: 20px; margin-top: 20px;"></canvas>
+<div class="d-flex">
+  <div class="d-flex">
+    <app-infographic></app-infographic>
+  </div>
+  <div class="position-relative mx-3 my-3">
+    <canvas
+      #clouds
+      style="position: absolute; left: 0; top: 0; z-index: 2"
+    ></canvas>
+    <canvas
+      class="rounded-top-5"
+      #sky
+      style="position: absolute; left: 0; top: 0; z-index: 1"
+    ></canvas>
 
-  <canvas #animals (click)="test($event)"
-          style="position: absolute; left: 0; top: 0; z-index: 3; margin-top: 20px;"></canvas>
+    <canvas
+      #animals
+      style="position: absolute; left: 0; top: 0; z-index: 3"
+    ></canvas>
 
-  <canvas #trees
-          style="position: absolute; left: 0; top: 0; z-index: 2; margin-top: 20px;"></canvas>
+    <canvas
+      #animals
+      style="position: absolute; left: 0; top: 0; z-index: 3"
+    ></canvas>
 
-  <canvas #terrain
-          style="position: absolute; left: 0; top: 0; z-index: 1; border-radius: 20px; margin-top: 20px;"></canvas> -->
-<app-hover-button></app-hover-button>
-<app-infographic></app-infographic>
+    <canvas
+      #trees
+      style="position: absolute; left: 0; top: 0; z-index: 2"
+    ></canvas>
+
+    <canvas
+      #terrain
+      class="rounded-bottom-5"
+      style="position: absolute; left: 0; top: 0; z-index: 1"
+    ></canvas>
+    <app-hover-button (buttonClicked)="test($event)"></app-hover-button>
+  </div>
 </div>
-
-
-
