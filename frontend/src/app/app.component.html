@@ -1,8 +1,19 @@
 <div class="d-flex">
-  <div class="d-flex">
-    <app-infographic></app-infographic>
+  <div class="d-flex flex-column">
+    <app-infographic
+      [environmental]="environmental"
+      [social]="social"
+      [governance]="governance"
+      [revenue]="revenue"
+    ></app-infographic>
+
+    <div style="width:400px">
+      <p class="ms-3 d-flex align-items-center"  *ngFor="let company of loadedCompanies; index as idx">
+        <i (click)="removeCompany(company.companyName)" class="bi bi-x-circle mx-3"></i> {{ company.companyName }}
+      </p>
+    </div>
   </div>
-  <div class="position-relative mx-3 my-3">
+  <div class="position-relative my-3">
     <canvas
       #clouds
       style="position: absolute; left: 0; top: 0; z-index: 2"

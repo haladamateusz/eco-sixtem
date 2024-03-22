@@ -4,8 +4,9 @@ import { AppComponent } from "./app/app.component";
 import { MatDialogModule } from "@angular/material/dialog";
 import { importProvidersFrom } from "@angular/core";
 import { provideAnimations } from "@angular/platform-browser/animations";
+import { provideHttpClient } from "@angular/common/http";
 
 
 bootstrapApplication(AppComponent, {
-  providers: [importProvidersFrom(MatDialogModule), provideAnimations()]
+  providers: [provideHttpClient(),importProvidersFrom(MatDialogModule), provideAnimations()]
 })

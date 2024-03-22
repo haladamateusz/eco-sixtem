@@ -8,11 +8,15 @@ import {
   ViewChild,
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { HoverButtonComponent } from "./hover-button/hover-button.component";
-import { InfographicComponent } from "./infographic/infographic.component";
-import { HoverInfoComponent } from "./hover-info/hover-info.component";
-import { ModalWrapperComponent } from "./modal-wrapper/modal-wrapper.component";
-import { PlantSapplingComponent } from "./plant-sappling/plant-sappling.component";
+import { HoverButtonComponent } from './hover-button/hover-button.component';
+import { InfographicComponent } from './infographic/infographic.component';
+import { HoverInfoComponent } from './hover-info/hover-info.component';
+import { ModalWrapperComponent } from './modal-wrapper/modal-wrapper.component';
+import { PlantSapplingComponent } from './plant-sappling/plant-sappling.component';
+import { first, switchMap } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { NgForOf } from "@angular/common";
+import { LimitedCharactersPipe } from "./limited-characters.pipe";
 
 interface Cloud {
   posX: number;
@@ -33,15 +37,44 @@ interface Animal {
   dead: boolean;
 }
 
+interface EsgFactors {
+  environmental: number;
+  social: number;
+  governance: number;
+}
+
+interface LoadedCompany {
+  companyName: string;
+  revenue: number;
+  environmental: number;
+  social: number;
+  governance: number;
+}
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   standalone: true,
   styleUrls: ['./app.component.scss'],
-  imports: [HoverButtonComponent, InfographicComponent, HoverInfoComponent],
+  imports: [
+    HoverButtonComponent,
+    InfographicComponent,
+    HoverInfoComponent,
+    NgForOf,
+    LimitedCharactersPipe,
+  ],
 })
 export class AppComponent implements OnInit, AfterViewInit {
+  environmental = '0';
+  social = '0';
+  governance = '0';
+  revenue = '0';
+
+  loadedCompanies: LoadedCompany[] = [];
+
   cdr = inject(ChangeDetectorRef);
+
+  httpClient = inject(HttpClient);
 
   title = 'eco-sixtem';
 
@@ -728,10 +761,51 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   test($event: any) {
-    this.dialog.open(PlantSapplingComponent, {
-      minWidth: 600,
-      maxWidth: 600,
-      minHeight: 300,
-    });
+    let companyName = '';
+    this.dialog
+      .open(PlantSapplingComponent, {
+        minWidth: 600,
+        maxWidth: 600,
+        minHeight: 200,
+      })
+      .afterClosed()
+      .pipe(
+        first(),
+        switchMap((data: string) => {
+          companyName = data;
+          return this.getCompanyEsgData(data);
+        }),
+      )
+      .subscribe((result: any) => {
+        this.loadedCompanies.push({
+          companyName: companyName,
+          revenue: Math.floor(Math.random() * 100) - 5,
+          environmental: (result as EsgFactors).environmental,
+          social: (result as EsgFactors).social,
+          governance: (result as EsgFactors).governance,
+        } as LoadedCompany);
+
+        this.environmental = (this.loadedCompanies.map(data => data.environmental).reduce((a, b) => a + b, 0) / this.loadedCompanies.length).toFixed(2);
+        this.social = (this.loadedCompanies.map(data => data.social).reduce((a, b) => a + b, 0) / this.loadedCompanies.length).toFixed(2);
+        this.governance = (this.loadedCompanies.map(data => data.governance).reduce((a, b) => a + b, 0) / this.loadedCompanies.length).toFixed(2);
+        this.revenue = (this.loadedCompanies.map(data => data.revenue).reduce((a, b) => a + b, 0) / this.loadedCompanies.length).toFixed(2);
+        console.log(result);
+      });
+  }
+
+  getCompanyEsgData(companyName: string) {
+    return this.httpClient.get(
+      `http://localhost:5000/company-esg/${encodeURIComponent(companyName)}`,
+    );
+  }
+
+  removeCompany(companyName: string) {
+    this.loadedCompanies = this.loadedCompanies.filter(company => company.companyName !== companyName)
+
+    this.environmental = (this.loadedCompanies.map(data => data.environmental).reduce((a, b) => a + b, 0) / this.loadedCompanies.length).toFixed(2);
+    this.social = (this.loadedCompanies.map(data => data.social).reduce((a, b) => a + b, 0) / this.loadedCompanies.length).toFixed(2);
+    this.governance = (this.loadedCompanies.map(data => data.governance).reduce((a, b) => a + b, 0) / this.loadedCompanies.length).toFixed(2);
+    this.revenue = (this.loadedCompanies.map(data => data.revenue).reduce((a, b) => a + b, 0) / this.loadedCompanies.length).toFixed(2);
+
   }
 }
