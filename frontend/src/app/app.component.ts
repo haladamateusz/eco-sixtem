@@ -82,36 +82,38 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   dialog = inject(MatDialog);
 
-  cloudsData: Cloud[] = [
+  cloudDataBase: Cloud[] = [
     { posY: 30, posX: 30, polluted: true },
     { posY: 100, posX: 100, polluted: true },
     { posY: 100, posX: 200, polluted: true },
     { posY: 50, posX: 400, polluted: true },
     { posY: 80, posX: 500, polluted: true },
-    { posY: 60, posX: 600, polluted: false },
-    { posY: 40, posX: 800, polluted: false },
-    { posY: 50, posX: 1100, polluted: false },
-    { posY: 80, posX: 1200, polluted: false },
-    { posY: 20, posX: 1300, polluted: false },
-    { posY: 30, posX: 1400, polluted: false },
+    { posY: 60, posX: 600, polluted: true },
+    { posY: 40, posX: 800, polluted: true },
+    { posY: 50, posX: 1100, polluted: true },
+    { posY: 80, posX: 1200, polluted: true },
+    { posY: 20, posX: 1300, polluted: true },
+    { posY: 30, posX: 1400, polluted: true },
   ];
 
-  treesData: Tree[] = [
+  cloudsData: Cloud[] = [];
+
+  treesDatabase: Tree[] = [
     {
       posY: Math.floor(Math.random() * 65) + 30,
       posX: Math.floor(Math.random() * 35) + 30,
       state: 'healthy',
     },
-    {
-      posY: Math.floor(Math.random() * 65) + 100,
-      posX: Math.floor(Math.random() * 35) + 100,
-      state: 'healthy',
-    },
-    {
-      posY: Math.floor(Math.random() * 65) + 100,
-      posX: Math.floor(Math.random() * 35) + 200,
-      state: 'healthy',
-    },
+    // {
+    //   posY: Math.floor(Math.random() * 65) + 100,
+    //   posX: Math.floor(Math.random() * 35) + 100,
+    //   state: 'healthy',
+    // },
+    // {
+    //   posY: Math.floor(Math.random() * 65) + 100,
+    //   posX: Math.floor(Math.random() * 35) + 200,
+    //   state: 'healthy',
+    // },
     {
       posY: Math.floor(Math.random() * 65) + 50,
       posX: Math.floor(Math.random() * 65) + 400,
@@ -122,16 +124,16 @@ export class AppComponent implements OnInit, AfterViewInit {
       posX: Math.floor(Math.random() * 65) + 500,
       state: 'healthy',
     },
-    {
-      posY: Math.floor(Math.random() * 65) + 60,
-      posX: Math.floor(Math.random() * 65) + 600,
-      state: 'healthy',
-    },
-    {
-      posY: Math.floor(Math.random() * 65) + 40,
-      posX: Math.floor(Math.random() * 65) + 800,
-      state: 'healthy',
-    },
+    // {
+    //   posY: Math.floor(Math.random() * 65) + 60,
+    //   posX: Math.floor(Math.random() * 65) + 600,
+    //   state: 'healthy',
+    // },
+    // {
+    //   posY: Math.floor(Math.random() * 65) + 40,
+    //   posX: Math.floor(Math.random() * 65) + 800,
+    //   state: 'healthy',
+    // },
     {
       posY: Math.floor(Math.random() * 65) + 50,
       posX: Math.floor(Math.random() * 65) + 1100,
@@ -152,16 +154,16 @@ export class AppComponent implements OnInit, AfterViewInit {
       posX: Math.floor(Math.random() * 65) + 675,
       state: 'healthy',
     },
-    {
-      posY: Math.floor(Math.random() * 35) + 130,
-      posX: Math.floor(Math.random() * 35) + 30,
-      state: 'healthy',
-    },
-    {
-      posY: Math.floor(Math.random() * 65) + 200,
-      posX: Math.floor(Math.random() * 35) + 100,
-      state: 'healthy',
-    },
+    // {
+    //   posY: Math.floor(Math.random() * 35) + 130,
+    //   posX: Math.floor(Math.random() * 35) + 30,
+    //   state: 'healthy',
+    // },
+    // {
+    //   posY: Math.floor(Math.random() * 65) + 200,
+    //   posX: Math.floor(Math.random() * 35) + 100,
+    //   state: 'healthy',
+    // },
     {
       posY: Math.floor(Math.random() * 65) + 200,
       posX: Math.floor(Math.random() * 65) + 200,
@@ -187,16 +189,16 @@ export class AppComponent implements OnInit, AfterViewInit {
       posX: Math.floor(Math.random() * 65) + 800,
       state: 'dead',
     },
-    {
-      posY: Math.floor(Math.random() * 65) + 150,
-      posX: Math.floor(Math.random() * 65) + 1100,
-      state: 'dying',
-    },
-    {
-      posY: Math.floor(Math.random() * 65) + 180,
-      posX: Math.floor(Math.random() * 65) + 1200,
-      state: 'dead',
-    },
+    // {
+    //   posY: Math.floor(Math.random() * 65) + 150,
+    //   posX: Math.floor(Math.random() * 65) + 1100,
+    //   state: 'dying',
+    // },
+    // {
+    //   posY: Math.floor(Math.random() * 65) + 180,
+    //   posX: Math.floor(Math.random() * 65) + 1200,
+    //   state: 'dead',
+    // },
     {
       posY: Math.floor(Math.random() * 65) + 120,
       posX: Math.floor(Math.random() * 65) + 543,
@@ -212,16 +214,16 @@ export class AppComponent implements OnInit, AfterViewInit {
       posX: Math.floor(Math.random() * 65) + 30,
       state: 'healthy',
     },
-    {
-      posY: Math.floor(Math.random() * 65) + 300,
-      posX: Math.floor(Math.random() * 65) + 100,
-      state: 'dying',
-    },
-    {
-      posY: Math.floor(Math.random() * 65) + 300,
-      posX: Math.floor(Math.random() * 65) + 200,
-      state: 'healthy',
-    },
+    // {
+    //   posY: Math.floor(Math.random() * 65) + 300,
+    //   posX: Math.floor(Math.random() * 65) + 100,
+    //   state: 'dying',
+    // },
+    // {
+    //   posY: Math.floor(Math.random() * 65) + 300,
+    //   posX: Math.floor(Math.random() * 65) + 200,
+    //   state: 'healthy',
+    // },
     {
       posY: Math.floor(Math.random() * 65) + 250,
       posX: Math.floor(Math.random() * 65) + 400,
@@ -247,16 +249,16 @@ export class AppComponent implements OnInit, AfterViewInit {
       posX: Math.floor(Math.random() * 65) + 1100,
       state: 'dying',
     },
-    {
-      posY: Math.floor(Math.random() * 65) + 280,
-      posX: Math.floor(Math.random() * 65) + 1200,
-      state: 'healthy',
-    },
-    {
-      posY: Math.floor(Math.random() * 65) + 220,
-      posX: Math.floor(Math.random() * 65) + 1300,
-      state: 'dying',
-    },
+    // {
+    //   posY: Math.floor(Math.random() * 65) + 280,
+    //   posX: Math.floor(Math.random() * 65) + 1200,
+    //   state: 'healthy',
+    // },
+    // {
+    //   posY: Math.floor(Math.random() * 65) + 220,
+    //   posX: Math.floor(Math.random() * 65) + 1300,
+    //   state: 'dying',
+    // },
     {
       posY: Math.floor(Math.random() * 65) + 230,
       posX: Math.floor(Math.random() * 65) + 1400,
@@ -264,12 +266,14 @@ export class AppComponent implements OnInit, AfterViewInit {
     },
   ];
 
-  animalsData: Animal[] = [
+  treesData: Tree[] = []
+
+  animalsDatabase: Animal[] =[
     {
       posY: Math.floor(Math.random() * 65) + 30,
       posX: Math.floor(Math.random() * 35) + 30,
       dead: true,
-      animalType: 'cat',
+      animalType: 'sheep',
     },
     {
       posY: Math.floor(Math.random() * 65) + 100,
@@ -281,19 +285,19 @@ export class AppComponent implements OnInit, AfterViewInit {
       posY: Math.floor(Math.random() * 65) + 100,
       posX: Math.floor(Math.random() * 35) + 200,
       dead: true,
-      animalType: 'cow',
+      animalType: 'sheep',
     },
     {
       posY: Math.floor(Math.random() * 65) + 50,
       posX: Math.floor(Math.random() * 65) + 400,
       dead: true,
-      animalType: 'cat',
+      animalType: 'sheep',
     },
     {
       posY: Math.floor(Math.random() * 65) + 80,
       posX: Math.floor(Math.random() * 65) + 500,
       dead: true,
-      animalType: 'cow',
+      animalType: 'sheep',
     },
     {
       posY: Math.floor(Math.random() * 65) + 60,
@@ -305,13 +309,13 @@ export class AppComponent implements OnInit, AfterViewInit {
       posY: Math.floor(Math.random() * 65) + 40,
       posX: Math.floor(Math.random() * 65) + 800,
       dead: false,
-      animalType: 'cat',
+      animalType: 'sheep',
     },
     {
       posY: Math.floor(Math.random() * 65) + 50,
       posX: Math.floor(Math.random() * 65) + 1100,
       dead: false,
-      animalType: 'cat',
+      animalType: 'sheep',
     },
     {
       posY: Math.floor(Math.random() * 65) + 80,
@@ -323,7 +327,7 @@ export class AppComponent implements OnInit, AfterViewInit {
       posY: Math.floor(Math.random() * 65) + 20,
       posX: Math.floor(Math.random() * 65) + 347,
       dead: false,
-      animalType: 'cat',
+      animalType: 'sheep',
     },
     {
       posY: Math.floor(Math.random() * 65) + 30,
@@ -335,7 +339,7 @@ export class AppComponent implements OnInit, AfterViewInit {
       posY: Math.floor(Math.random() * 65) + 130,
       posX: Math.floor(Math.random() * 65) + 30,
       dead: true,
-      animalType: 'cat',
+      animalType: 'sheep',
     },
     {
       posY: Math.floor(Math.random() * 65) + 200,
@@ -347,7 +351,7 @@ export class AppComponent implements OnInit, AfterViewInit {
       posY: Math.floor(Math.random() * 65) + 200,
       posX: Math.floor(Math.random() * 65) + 200,
       dead: true,
-      animalType: 'cow',
+      animalType: 'sheep',
     },
     {
       posY: Math.floor(Math.random() * 65) + 150,
@@ -359,25 +363,25 @@ export class AppComponent implements OnInit, AfterViewInit {
       posY: Math.floor(Math.random() * 65) + 180,
       posX: Math.floor(Math.random() * 65) + 500,
       dead: true,
-      animalType: 'cat',
+      animalType: 'sheep',
     },
     {
       posY: Math.floor(Math.random() * 65) + 160,
       posX: Math.floor(Math.random() * 65) + 600,
       dead: false,
-      animalType: 'cow',
+      animalType: 'sheep',
     },
     {
       posY: Math.floor(Math.random() * 65) + 140,
       posX: Math.floor(Math.random() * 65) + 800,
       dead: false,
-      animalType: 'cat',
+      animalType: 'sheep',
     },
     {
       posY: Math.floor(Math.random() * 65) + 150,
       posX: Math.floor(Math.random() * 65) + 1100,
       dead: false,
-      animalType: 'cow',
+      animalType: 'sheep',
     },
     {
       posY: Math.floor(Math.random() * 65) + 180,
@@ -395,19 +399,19 @@ export class AppComponent implements OnInit, AfterViewInit {
       posY: Math.floor(Math.random() * 65) + 130,
       posX: Math.floor(Math.random() * 65) + 934,
       dead: false,
-      animalType: 'cow',
+      animalType: 'sheep',
     },
     {
       posY: Math.floor(Math.random() * 65) + 230,
       posX: Math.floor(Math.random() * 65) + 30,
       dead: true,
-      animalType: 'cat',
+      animalType: 'sheep',
     },
     {
       posY: Math.floor(Math.random() * 65) + 300,
       posX: Math.floor(Math.random() * 65) + 100,
       dead: true,
-      animalType: 'cow',
+      animalType: 'sheep',
     },
     {
       posY: Math.floor(Math.random() * 65) + 300,
@@ -419,13 +423,13 @@ export class AppComponent implements OnInit, AfterViewInit {
       posY: Math.floor(Math.random() * 65) + 250,
       posX: Math.floor(Math.random() * 65) + 400,
       dead: true,
-      animalType: 'cat',
+      animalType: 'sheep',
     },
     {
       posY: Math.floor(Math.random() * 65) + 280,
       posX: Math.floor(Math.random() * 65) + 500,
       dead: true,
-      animalType: 'cow',
+      animalType: 'sheep',
     },
     {
       posY: Math.floor(Math.random() * 65) + 260,
@@ -437,33 +441,35 @@ export class AppComponent implements OnInit, AfterViewInit {
       posY: Math.floor(Math.random() * 65) + 240,
       posX: Math.floor(Math.random() * 65) + 800,
       dead: false,
-      animalType: 'cat',
+      animalType: 'sheep',
     },
     {
       posY: Math.floor(Math.random() * 65) + 250,
       posX: Math.floor(Math.random() * 65) + 1100,
       dead: false,
-      animalType: 'cow',
+      animalType: 'sheep',
     },
     {
       posY: Math.floor(Math.random() * 65) + 280,
       posX: Math.floor(Math.random() * 65) + 1200,
       dead: false,
-      animalType: 'cat',
+      animalType: 'sheep',
     },
     {
       posY: Math.floor(Math.random() * 65) + 220,
       posX: Math.floor(Math.random() * 65) + 1050,
       dead: false,
-      animalType: 'cat',
+      animalType: 'sheep',
     },
     {
       posY: Math.floor(Math.random() * 65) + 230,
       posX: Math.floor(Math.random() * 65) + 1200,
       dead: false,
-      animalType: 'cow',
+      animalType: 'sheep',
     },
   ];
+
+  animalsData: Animal[] = []
 
   @ViewChild('clouds', { static: true }) clouds!: ElementRef;
 
@@ -474,6 +480,8 @@ export class AppComponent implements OnInit, AfterViewInit {
   @ViewChild('trees', { static: true }) trees!: ElementRef;
 
   @ViewChild('animals', { static: true }) animals!: ElementRef;
+
+  @ViewChild('debris', { static: true }) debris!: ElementRef;
 
   ngOnInit() {
     if (!localStorage.getItem('isFirstVisit')) {
@@ -502,33 +510,34 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.animals.nativeElement.width = window.innerWidth - 447;
     this.animals.nativeElement.height = window.innerHeight - 215;
 
+    this.debris.nativeElement.width = window.innerWidth - 447;
+    this.debris.nativeElement.height = window.innerHeight - 215;
+
     this.drawSky();
-    this.drawClouds();
+    // this.drawClouds();
     this.drawTerrain();
-    this.drawTrees();
-    this.drawAnimals();
+    // this.drawTrees();
+    // this.drawAnimals();
     this.cdr.detectChanges();
   }
 
   drawSky(): void {
+    const sky = new Image();
+    sky.src = '../assets/skybox.png';
     const canvas = this.sky.nativeElement;
     const ctx = canvas.getContext('2d');
-    if (ctx) {
-      const grd = ctx.createLinearGradient(0, 0, canvas.width, 0);
-      grd.addColorStop(0, 'deepskyblue');
-      grd.addColorStop(1, '#87CEEB');
-      // ctx.fillStyle = 'deepskyblue';
-      ctx.fillStyle = grd;
-      ctx.fillRect(0, 0, canvas.width, 200);
-    }
+
+    sky.onload = () => {
+      ctx.drawImage(sky, 0, 0, canvas.width, canvas.height);
+    };
   }
 
   drawClouds(): void {
     const happyCloud = new Image();
-    happyCloud.src = '../assets/happy_cloud.png';
+    happyCloud.src = '../assets/cloud_healthy.png';
 
     const pollutedCloud = new Image();
-    pollutedCloud.src = '../assets/sad_cloud.png';
+    pollutedCloud.src = '../assets/cloud_polluted.png';
 
     const canvas = this.clouds.nativeElement;
     const ctx = canvas.getContext('2d');
@@ -536,8 +545,8 @@ export class AppComponent implements OnInit, AfterViewInit {
     Promise.all([
       () => {
         return () => {
-          happyCloud.height = 80;
-          happyCloud.width = 80;
+          happyCloud.height = 102;
+          happyCloud.width = 172;
           happyCloud.onload = () => {
             Promise.resolve(happyCloud);
           };
@@ -545,8 +554,8 @@ export class AppComponent implements OnInit, AfterViewInit {
       },
       () => {
         return () => {
-          pollutedCloud.height = 80;
-          pollutedCloud.width = 80;
+          pollutedCloud.height = 102;
+          pollutedCloud.width = 172;
           pollutedCloud.onload = () => {
             Promise.resolve(pollutedCloud);
           };
@@ -562,12 +571,12 @@ export class AppComponent implements OnInit, AfterViewInit {
             cloud.polluted ? pollutedCloud : happyCloud,
             0,
             0,
-            339,
-            339,
+            172,
+            102,
             cloud.posX + offsetX,
             cloud.posY + offsetY,
-            50,
-            50,
+            172 / 2,
+            102 / 2,
           );
         });
       }, 300);
@@ -576,7 +585,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   drawTerrain() {
     const grass = new Image();
-    grass.src = '../assets/grass3.jpg';
+    grass.src = '../assets/bck2_2.png';
     const canvas = this.terrain.nativeElement;
     const ctx = canvas.getContext('2d');
 
@@ -588,7 +597,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     };
   }
 
-  first = 0
+  first = 0;
 
   drawTrees() {
     const happyTree1 = new Image();
@@ -828,13 +837,13 @@ export class AppComponent implements OnInit, AfterViewInit {
         let treeToRender: any = '';
 
         // happy trees only
-        // const treeIndex = Math.floor(Math.random() * 6) + 1;
+        const treeIndex = Math.floor(Math.random() * 6) + 1;
 
         // dying trees only
         // const treeIndex = Math.floor(Math.random() * 6) + 7;
 
         // dead trees only
-        const treeIndex = Math.floor(Math.random() * 6) + 13;
+        // const treeIndex = Math.floor(Math.random() * 6) + 13;
         switch (treeIndex) {
           case 1:
             treeToRender = happyTree1;
@@ -903,25 +912,19 @@ export class AppComponent implements OnInit, AfterViewInit {
           122,
         );
       });
-      if(this.first <3) {
-        this.first +=1
-        requestAnimationFrame(() => this.drawTrees())
+      if (this.first < 3) {
+        this.first += 1;
+        requestAnimationFrame(() => this.drawTrees());
       }
     });
   }
 
   drawAnimals() {
-    const cat = new Image();
-    cat.src = '../assets/cat.png';
-
-    const cow = new Image();
-    cow.src = '../assets/cow.png';
-
     const dog = new Image();
-    dog.src = '../assets/dog.png';
+    dog.src = '../assets/dog_new.png';
 
-    const skull = new Image();
-    skull.src = '../assets/skull.png';
+    const sheep = new Image();
+    sheep.src = '../assets/sheep.png';
 
     const canvas = this.animals.nativeElement;
     const ctx = canvas.getContext('2d');
@@ -929,37 +932,19 @@ export class AppComponent implements OnInit, AfterViewInit {
     Promise.all([
       () => {
         return () => {
-          cat.height = 80;
-          cat.width = 80;
-          cat.onload = () => {
-            Promise.resolve(cat);
+          sheep.height = 16;
+          sheep.width = 14;
+          sheep.onload = () => {
+            Promise.resolve(sheep);
           };
         };
       },
       () => {
         return () => {
-          cow.height = 80;
-          cow.width = 80;
-          cow.onload = () => {
-            Promise.resolve(cow);
-          };
-        };
-      },
-      () => {
-        return () => {
-          dog.height = 80;
-          dog.width = 80;
+          dog.height = 16;
+          dog.width = 14;
           dog.onload = () => {
             Promise.resolve(dog);
-          };
-        };
-      },
-      () => {
-        return () => {
-          skull.height = 80;
-          skull.width = 80;
-          skull.onload = () => {
-            Promise.resolve(skull);
           };
         };
       },
@@ -967,42 +952,21 @@ export class AppComponent implements OnInit, AfterViewInit {
       setInterval(() => {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         this.animalsData.forEach((animal) => {
-          let animalToRender: any = '';
-
-          switch (animal.animalType) {
-            case 'cat':
-              animalToRender = cat;
-              break;
-            case 'cow':
-              animalToRender = cow;
-              break;
-            case 'dog':
-              animalToRender = dog;
-              break;
-          }
+          let animalToRender = animal.animalType === 'dog' ? dog : sheep;
 
           const offsetX = Math.floor(Math.random() * 15) + 1;
           const offsetY = Math.floor(Math.random() * 15) + 1;
 
-          let animalWidth = 300;
-
-          if (animal.animalType === 'cow') {
-            animalWidth = 497;
-          }
-          if (animal.animalType === 'dog') {
-            animalWidth = 337;
-          }
-
           ctx.drawImage(
-            animal.dead ? skull : animalToRender,
+            animalToRender,
             0,
             0,
-            animalWidth,
-            300,
-            animal.dead ? animal.posX : animal.posX + offsetX,
-            animal.dead ? animal.posY + 200 : animal.posY + offsetY + 200,
-            animalWidth / 12,
-            25,
+            14,
+            16,
+            animal.posX + offsetX,
+            animal.posY + offsetY + 200,
+            28,
+            32,
           );
         });
       }, 300);
@@ -1054,6 +1018,34 @@ export class AppComponent implements OnInit, AfterViewInit {
             .map((data) => data.revenue)
             .reduce((a, b) => a + b, 0) / this.loadedCompanies.length
         ).toFixed(2);
+
+        this.cloudsData = [
+          ...this.cloudsData,
+          ...this.cloudDataBase.slice(
+            this.cloudsData.length,
+            this.loadedCompanies.length * 3,
+          ),
+        ];
+
+        this.treesData = [
+          ...this.treesData,
+          ...this.treesDatabase.slice(
+            this.treesData.length,
+            this.loadedCompanies.length * 3,
+          ),
+        ];
+
+        this.animalsData = [
+          ...this.animalsData,
+          ...this.animalsDatabase.slice(
+            this.animalsData.length,
+            this.loadedCompanies.length * 3,
+          ),
+        ];
+
+        this.drawAnimals()
+        this.drawClouds();
+        this.drawTrees();
         console.log(result);
       });
   }
@@ -1089,5 +1081,33 @@ export class AppComponent implements OnInit, AfterViewInit {
         .map((data) => data.revenue)
         .reduce((a, b) => a + b, 0) / this.loadedCompanies.length
     ).toFixed(2);
+
+    this.cloudsData = [
+      ...this.cloudsData,
+      ...this.cloudDataBase.slice(
+        this.cloudsData.length,
+        this.loadedCompanies.length * 3,
+      ),
+    ];
+
+    this.treesData = [
+      ...this.treesData,
+      ...this.treesDatabase.slice(
+        this.treesData.length,
+        this.loadedCompanies.length * 3,
+      ),
+    ];
+
+    this.animalsData = [
+      ...this.animalsData,
+      ...this.animalsDatabase.slice(
+        this.animalsData.length,
+        this.loadedCompanies.length * 3,
+      ),
+    ];
+
+    this.drawAnimals()
+    this.drawClouds();
+    this.drawTrees();
   }
 }
