@@ -15,8 +15,8 @@ import { ModalWrapperComponent } from './modal-wrapper/modal-wrapper.component';
 import { PlantSapplingComponent } from './plant-sappling/plant-sappling.component';
 import { first, switchMap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { NgForOf } from "@angular/common";
-import { LimitedCharactersPipe } from "./limited-characters.pipe";
+import { NgForOf } from '@angular/common';
+import { LimitedCharactersPipe } from './limited-characters.pipe';
 
 interface Cloud {
   posX: number;
@@ -588,15 +588,62 @@ export class AppComponent implements OnInit, AfterViewInit {
     };
   }
 
+  first = 0
+
   drawTrees() {
-    const happyTree = new Image();
-    happyTree.src = '../assets/happy_tree.png';
+    const happyTree1 = new Image();
+    happyTree1.src = '../assets/tree3_1up.png';
 
-    const dyingTree = new Image();
-    dyingTree.src = '../assets/dying_tree.png';
+    const happyTree2 = new Image();
+    happyTree2.src = '../assets/tree3_2up.png';
 
-    const deadTree = new Image();
-    deadTree.src = '../assets/sad_tree.png';
+    const happyTree3 = new Image();
+    happyTree3.src = '../assets/tree3_3up.png';
+
+    const happyTree4 = new Image();
+    happyTree4.src = '../assets/tree3_1down.png';
+
+    const happyTree5 = new Image();
+    happyTree5.src = '../assets/tree3_2down.png';
+
+    const happyTree6 = new Image();
+    happyTree6.src = '../assets/tree3_3down.png';
+
+    const dyingTree1 = new Image();
+    dyingTree1.src = '../assets/tree2_1up.png';
+
+    const dyingTree2 = new Image();
+    dyingTree2.src = '../assets/tree2_1up.png';
+
+    const dyingTree3 = new Image();
+    dyingTree3.src = '../assets/tree2_1up.png';
+
+    const dyingTree4 = new Image();
+    dyingTree4.src = '../assets/tree2_1up.png';
+
+    const dyingTree5 = new Image();
+    dyingTree5.src = '../assets/tree2_1up.png';
+
+    const dyingTree6 = new Image();
+    dyingTree6.src = '../assets/tree2_1up.png';
+
+    const deadTree1 = new Image();
+    deadTree1.src = '../assets/tree1_1up.png';
+
+    const deadTree2 = new Image();
+    deadTree2.src = '../assets/tree1_2up.png';
+
+    const deadTree3 = new Image();
+    deadTree3.src = '../assets/tree1_3up.png';
+
+    const deadTree4 = new Image();
+    deadTree4.src = '../assets/tree1_1down.png';
+
+    const deadTree5 = new Image();
+    deadTree5.src = '../assets/tree1_2down.png';
+
+    const deadTree6 = new Image();
+    deadTree6.src = '../assets/tree1_3down.png';
 
     const canvas = this.trees.nativeElement;
     const ctx = canvas.getContext('2d');
@@ -604,28 +651,174 @@ export class AppComponent implements OnInit, AfterViewInit {
     Promise.all([
       () => {
         return () => {
-          dyingTree.height = 80;
-          dyingTree.width = 80;
-          dyingTree.onload = () => {
-            Promise.resolve(dyingTree);
+          happyTree1.height = 170;
+          happyTree1.width = 142;
+          happyTree1.onload = () => {
+            Promise.resolve(happyTree1);
           };
         };
       },
       () => {
         return () => {
-          happyTree.height = 80;
-          happyTree.width = 80;
-          happyTree.onload = () => {
-            Promise.resolve(happyTree);
+          happyTree2.height = 170;
+
+          deadTree5.width = 142;
+          happyTree2.onload = () => {
+            Promise.resolve(happyTree2);
           };
         };
       },
       () => {
         return () => {
-          deadTree.height = 80;
-          deadTree.width = 80;
-          deadTree.onload = () => {
-            Promise.resolve(deadTree);
+          happyTree3.height = 170;
+          happyTree3.width = 142;
+          happyTree3.onload = () => {
+            Promise.resolve(happyTree3);
+          };
+        };
+      },
+      () => {
+        return () => {
+          happyTree4.height = 170;
+          happyTree4.width = 142;
+          happyTree4.onload = () => {
+            Promise.resolve(happyTree4);
+          };
+        };
+      },
+      () => {
+        return () => {
+          happyTree5.height = 170;
+
+          deadTree5.width = 142;
+          happyTree5.onload = () => {
+            Promise.resolve(happyTree5);
+          };
+        };
+      },
+      () => {
+        return () => {
+          happyTree6.height = 170;
+
+          deadTree5.width = 142;
+          happyTree6.onload = () => {
+            Promise.resolve(happyTree6);
+          };
+        };
+      },
+      // dying tree
+      () => {
+        return () => {
+          dyingTree1.height = 170;
+
+          deadTree5.width = 142;
+          dyingTree1.onload = () => {
+            Promise.resolve(dyingTree1);
+          };
+        };
+      },
+      () => {
+        return () => {
+          dyingTree2.height = 170;
+
+          deadTree5.width = 142;
+          dyingTree2.onload = () => {
+            Promise.resolve(dyingTree2);
+          };
+        };
+      },
+      () => {
+        return () => {
+          dyingTree3.height = 170;
+
+          deadTree5.width = 142;
+          dyingTree3.onload = () => {
+            Promise.resolve(dyingTree3);
+          };
+        };
+      },
+      () => {
+        return () => {
+          dyingTree4.height = 170;
+
+          deadTree5.width = 142;
+          dyingTree4.onload = () => {
+            Promise.resolve(dyingTree4);
+          };
+        };
+      },
+      () => {
+        return () => {
+          dyingTree5.height = 170;
+
+          deadTree5.width = 142;
+          dyingTree5.onload = () => {
+            Promise.resolve(dyingTree5);
+          };
+        };
+      },
+      () => {
+        return () => {
+          dyingTree6.height = 170;
+          deadTree5.width = 142;
+          dyingTree6.onload = () => {
+            Promise.resolve(dyingTree6);
+          };
+        };
+      },
+      // --------------------- dead tree
+
+      () => {
+        return () => {
+          deadTree1.height = 170;
+          deadTree5.width = 142;
+          deadTree1.onload = () => {
+            Promise.resolve(deadTree1);
+          };
+        };
+      },
+      () => {
+        return () => {
+          deadTree2.height = 170;
+          deadTree5.width = 142;
+          deadTree2.onload = () => {
+            Promise.resolve(deadTree2);
+          };
+        };
+      },
+      () => {
+        return () => {
+          deadTree3.height = 170;
+          deadTree5.width = 142;
+          deadTree3.onload = () => {
+            Promise.resolve(deadTree3);
+          };
+        };
+      },
+      () => {
+        return () => {
+          deadTree4.height = 170;
+          deadTree5.width = 142;
+          deadTree4.onload = () => {
+            Promise.resolve(deadTree4);
+          };
+        };
+      },
+      () => {
+        return () => {
+          deadTree5.height = 170;
+          deadTree5.width = 142;
+          deadTree5.onload = () => {
+            Promise.resolve(deadTree5);
+          };
+        };
+      },
+      () => {
+        return () => {
+          deadTree6.height = 170;
+          deadTree5.width = 142;
+          deadTree6.onload = () => {
+            Promise.resolve(deadTree6);
           };
         };
       },
@@ -633,31 +826,87 @@ export class AppComponent implements OnInit, AfterViewInit {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       this.treesData.forEach((tree) => {
         let treeToRender: any = '';
-        switch (tree.state) {
-          case 'healthy':
-            treeToRender = happyTree;
+
+        // happy trees only
+        // const treeIndex = Math.floor(Math.random() * 6) + 1;
+
+        // dying trees only
+        // const treeIndex = Math.floor(Math.random() * 6) + 7;
+
+        // dead trees only
+        const treeIndex = Math.floor(Math.random() * 6) + 13;
+        switch (treeIndex) {
+          case 1:
+            treeToRender = happyTree1;
             break;
-          case 'dying':
-            treeToRender = dyingTree;
+          case 2:
+            treeToRender = happyTree2;
             break;
-          case 'dead':
-            treeToRender = deadTree;
+          case 3:
+            treeToRender = happyTree3;
+            break;
+          case 4:
+            treeToRender = happyTree4;
+            break;
+          case 5:
+            treeToRender = happyTree5;
+            break;
+          case 6:
+            treeToRender = happyTree6;
+            break;
+          case 7:
+            treeToRender = dyingTree1;
+            break;
+          case 8:
+            treeToRender = dyingTree2;
+            break;
+          case 9:
+            treeToRender = dyingTree3;
+            break;
+          case 10:
+            treeToRender = dyingTree4;
+            break;
+          case 11:
+            treeToRender = dyingTree5;
+            break;
+          case 12:
+            treeToRender = dyingTree6;
+            break;
+          case 13:
+            treeToRender = deadTree1;
+            break;
+          case 14:
+            treeToRender = deadTree2;
+            break;
+          case 15:
+            treeToRender = deadTree3;
+            break;
+          case 16:
+            treeToRender = deadTree4;
+            break;
+          case 17:
+            treeToRender = deadTree5;
+            break;
+          case 18:
+            treeToRender = deadTree6;
             break;
         }
         ctx.drawImage(
           treeToRender,
           0,
           0,
-          339,
-          339,
+          170,
+          142,
           tree.posX,
-          tree.posY + 250,
-          50,
-          50,
+          tree.posY + 150,
+          130,
+          122,
         );
       });
-
-      requestAnimationFrame(() => this.drawTrees());
+      if(this.first <3) {
+        this.first +=1
+        requestAnimationFrame(() => this.drawTrees())
+      }
     });
   }
 
@@ -785,10 +1034,26 @@ export class AppComponent implements OnInit, AfterViewInit {
           governance: (result as EsgFactors).governance,
         } as LoadedCompany);
 
-        this.environmental = (this.loadedCompanies.map(data => data.environmental).reduce((a, b) => a + b, 0) / this.loadedCompanies.length).toFixed(2);
-        this.social = (this.loadedCompanies.map(data => data.social).reduce((a, b) => a + b, 0) / this.loadedCompanies.length).toFixed(2);
-        this.governance = (this.loadedCompanies.map(data => data.governance).reduce((a, b) => a + b, 0) / this.loadedCompanies.length).toFixed(2);
-        this.revenue = (this.loadedCompanies.map(data => data.revenue).reduce((a, b) => a + b, 0) / this.loadedCompanies.length).toFixed(2);
+        this.environmental = (
+          this.loadedCompanies
+            .map((data) => data.environmental)
+            .reduce((a, b) => a + b, 0) / this.loadedCompanies.length
+        ).toFixed(2);
+        this.social = (
+          this.loadedCompanies
+            .map((data) => data.social)
+            .reduce((a, b) => a + b, 0) / this.loadedCompanies.length
+        ).toFixed(2);
+        this.governance = (
+          this.loadedCompanies
+            .map((data) => data.governance)
+            .reduce((a, b) => a + b, 0) / this.loadedCompanies.length
+        ).toFixed(2);
+        this.revenue = (
+          this.loadedCompanies
+            .map((data) => data.revenue)
+            .reduce((a, b) => a + b, 0) / this.loadedCompanies.length
+        ).toFixed(2);
         console.log(result);
       });
   }
@@ -800,12 +1065,29 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   removeCompany(companyName: string) {
-    this.loadedCompanies = this.loadedCompanies.filter(company => company.companyName !== companyName)
+    this.loadedCompanies = this.loadedCompanies.filter(
+      (company) => company.companyName !== companyName,
+    );
 
-    this.environmental = (this.loadedCompanies.map(data => data.environmental).reduce((a, b) => a + b, 0) / this.loadedCompanies.length).toFixed(2);
-    this.social = (this.loadedCompanies.map(data => data.social).reduce((a, b) => a + b, 0) / this.loadedCompanies.length).toFixed(2);
-    this.governance = (this.loadedCompanies.map(data => data.governance).reduce((a, b) => a + b, 0) / this.loadedCompanies.length).toFixed(2);
-    this.revenue = (this.loadedCompanies.map(data => data.revenue).reduce((a, b) => a + b, 0) / this.loadedCompanies.length).toFixed(2);
-
+    this.environmental = (
+      this.loadedCompanies
+        .map((data) => data.environmental)
+        .reduce((a, b) => a + b, 0) / this.loadedCompanies.length
+    ).toFixed(2);
+    this.social = (
+      this.loadedCompanies
+        .map((data) => data.social)
+        .reduce((a, b) => a + b, 0) / this.loadedCompanies.length
+    ).toFixed(2);
+    this.governance = (
+      this.loadedCompanies
+        .map((data) => data.governance)
+        .reduce((a, b) => a + b, 0) / this.loadedCompanies.length
+    ).toFixed(2);
+    this.revenue = (
+      this.loadedCompanies
+        .map((data) => data.revenue)
+        .reduce((a, b) => a + b, 0) / this.loadedCompanies.length
+    ).toFixed(2);
   }
 }
