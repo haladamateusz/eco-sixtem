@@ -5,9 +5,7 @@
 <div class="mt-4">
   <h4>ESG Factors</h4>
 
-  <!--  // @for (metric of esgMetrics: track metric.value) {-->
-  <ng-container *ngFor="let metric of esgMetrics">
+  @for (metric of esgMetrics; track metric.value) {
     <app-single-metric [metric]="metric" />
-  </ng-container>
-  <!--  }-->
+  }
 </div>
