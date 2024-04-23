@@ -1,49 +1,60 @@
-<div class="d-flex">
-  <div class="d-flex flex-column">
-    <app-infographic
-      [environmental]="environmental"
-      [social]="social"
-      [governance]="governance"
-      [revenue]="revenue"
-    ></app-infographic>
+<app-navbar />
 
-    <div style="width:400px">
-      <p class="ms-3 d-flex align-items-center"  *ngFor="let company of loadedCompanies; index as idx">
-        <i (click)="removeCompany(company.companyName)" class="bi bi-x-circle mx-3"></i> {{ company.companyName }}
-      </p>
+
+<div class="container">
+  <div class="row pt-5">
+    <div class="col-3">
+    <app-metrics />
     </div>
-  </div>
-  <div class="position-relative my-3">
-    <canvas
-      #clouds
-      style="position: absolute; left: 0; top: 0; z-index: 2"
-    ></canvas>
-    <canvas
-      class="rounded-top-5 rounded-bottom-5"
-      #sky
-      style="position: absolute; left: 0; top: 0; z-index: 1"
-    ></canvas>
-
-    <canvas
-      #animals
-      style="position: absolute; left: 0; top: 0; z-index: 3"
-    ></canvas>
-
-    <canvas
-      #debris
-      style="position: absolute; left: 0; top: 0; z-index: 3"
-    ></canvas>
-
-    <canvas
-      #trees
-      style="position: absolute; left: 0; top: 0; z-index: 2"
-    ></canvas>
-
-    <canvas
-      #terrain
-      class="rounded-bottom-5"
-      style="position: absolute; left: 0; top: 0; z-index: 1"
-    ></canvas>
-    <app-hover-button (buttonClicked)="test($event)"></app-hover-button>
+    <div class="col-9">test 2</div>
   </div>
 </div>
+<!--<div class="d-flex">-->
+<!--  <div class="d-flex flex-column">-->
+<!--    <app-infographic-->
+<!--      [environmental]="environmental"-->
+<!--      [social]="social"-->
+<!--      [governance]="governance"-->
+<!--      [revenue]="revenue"-->
+<!--    ></app-infographic>-->
+
+<!--    <div style="width:400px">-->
+<!--      <p class="ms-3 d-flex align-items-center"  *ngFor="let company of loadedCompanies; index as idx">-->
+<!--        <i (click)="removeCompany(company.companyName)" class="bi bi-x-circle mx-3"></i> {{ company.companyName }}-->
+<!--      </p>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--  <div class="position-relative my-3">-->
+<!--    <canvas-->
+<!--      #clouds-->
+<!--      style="position: absolute; left: 0; top: 0; z-index: 2"-->
+<!--    ></canvas>-->
+<!--    <canvas-->
+<!--      class="rounded-top-5 rounded-bottom-5"-->
+<!--      #sky-->
+<!--      style="position: absolute; left: 0; top: 0; z-index: 1"-->
+<!--    ></canvas>-->
+
+<!--    <canvas-->
+<!--      #animals-->
+<!--      style="position: absolute; left: 0; top: 0; z-index: 3"-->
+<!--    ></canvas>-->
+
+<!--    <canvas-->
+<!--      #debris-->
+<!--      style="position: absolute; left: 0; top: 0; z-index: 3"-->
+<!--    ></canvas>-->
+
+<!--    <canvas-->
+<!--      #trees-->
+<!--      style="position: absolute; left: 0; top: 0; z-index: 2"-->
+<!--    ></canvas>-->
+
+<!--    <canvas-->
+<!--      #terrain-->
+<!--      class="rounded-bottom-5"-->
+<!--      style="position: absolute; left: 0; top: 0; z-index: 1"-->
+<!--    ></canvas>-->
+<!--    <app-hover-button (buttonClicked)="test($event)"></app-hover-button>-->
+<!--  </div>-->
+<!--</div>-->

@@ -1,0 +1,16 @@
+<div class="d-flex align-items-center ps-1 mt-2">
+  <img
+    [ngSrc]="metric.icon"
+    [alt]="metric.name"
+    width="30"
+    height="30"
+  />
+  <img
+    class="mx-1"
+    [ngSrc]="metric.caret"
+    alt="caret"
+    width="40"
+    height="40"
+  />
+  <span> {{ metric.value }}</span>
+</div>
