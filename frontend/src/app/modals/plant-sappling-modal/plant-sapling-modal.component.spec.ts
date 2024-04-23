@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PlantSapplingComponent } from './plant-sappling.component';
+import { PlantSaplingModalComponent } from './plant-sapling-modal.component';
 
 describe('PlantSapplingComponent', () => {
-  let component: PlantSapplingComponent;
-  let fixture: ComponentFixture<PlantSapplingComponent>;
+  let component: PlantSaplingModalComponent;
+  let fixture: ComponentFixture<PlantSaplingModalComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [PlantSapplingComponent]
+      imports: [PlantSaplingModalComponent]
     });
-    fixture = TestBed.createComponent(PlantSapplingComponent);
+    fixture = TestBed.createComponent(PlantSaplingModalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

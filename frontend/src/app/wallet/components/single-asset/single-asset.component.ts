@@ -2,10 +2,10 @@ import { Component } from '@angular/core';
 import { NgOptimizedImage } from '@angular/common';
 
 @Component({
-  selector: 'app-navbar',
-  templateUrl: './navbar.component.html',
+  selector: 'app-single-asset',
   standalone: true,
   imports: [NgOptimizedImage],
-  styleUrls: ['./navbar.component.scss']
+  templateUrl: './single-asset.component.html',
+  styleUrl: './single-asset.component.scss'
 })
-export class NavbarComponent {}
+export class SingleAssetComponent {}
