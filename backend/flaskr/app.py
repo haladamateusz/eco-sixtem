@@ -10,6 +10,9 @@ CORS(app)
 def company_names():
     df = pd.read_csv('../all_factors.csv')
 
+    # df = df[['companyLongName', 'ISIN_BC']].drop_duplicates(subset='companyLongName')
+    # print(len(list(df['companyLongName'].unique())))
+
     return list(df['companyLongName'].unique())
 
 @app.route("/company-esg/<company>")

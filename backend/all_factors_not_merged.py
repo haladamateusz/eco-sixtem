@@ -1,10 +1,10 @@
 import pandas as pd
 
-df = pd.read_csv('EUESGMANUFACTURER.csv')
+df = pd.read_csv('input-data/EUESGMANUFACTURER.csv')
 
 data_top = df.head()
 
-data_small = df[['swissValorNumber', 'companyLongName', 'ESGClassification', 'ESGFactorAmountLastYear']].dropna().copy()
+data_small = df[['swissValorNumber', 'companyLongName', 'ISIN_BC', 'LEI', 'ESGClassification', 'ESGFactorAmountLastYear']].dropna().copy()
 
 
 ESGClassificationWhiteList = ['Greenhouse gas emissions',
@@ -42,6 +42,8 @@ for svn in UNIQUE_swissValorNumber:
             df_with_avg_values = pd.concat([df_with_avg_values, pd.DataFrame([{
                 'swissValorNumber': svn,
                 'companyLongName': data_small[data_small['swissValorNumber'] == svn]['companyLongName'].iloc[0],
+                'ISIN_BC': data_small[data_small['swissValorNumber'] == svn]['ISIN_BC'].iloc[0],
+                'LEI' : data_small[data_small['swissValorNumber'] == svn]['LEI'].iloc[0],
                 'ESGClassification': esgc,
                 'ESGFactorAVG': round(data_small[(data_small['swissValorNumber'] == svn) & (data_small['ESGClassification'] == esgc)]['ESGFactorAmountLastYear'].mean(),2)
             }])], ignore_index=True)
