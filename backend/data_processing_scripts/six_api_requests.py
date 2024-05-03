@@ -56,12 +56,14 @@ class FinancialDataAPI:
         """
         Retrieve End of Day Timeseries data.
         """
+        print(listings)
         end_point = "/v1/listings/marketData/endOfDayHistory"
         query_string = {
             'scheme': scheme,
             'ids': ",".join(listings),
             'dateFrom': dateFrom,
-            'dateTo': dateTo
+            'dateTo': dateTo,
+            'priceAdjustment': 'ADJUSTED'
         }
         return self._http_request(end_point, query_string)
 

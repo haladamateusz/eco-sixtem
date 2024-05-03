@@ -1,6 +1,6 @@
 import pandas as pd
 
-df = pd.read_csv('input-data/EUESGMANUFACTURER.csv')
+df = pd.read_csv('input_data/EUESGMANUFACTURER.csv')
 
 data_top = df.head()
 
