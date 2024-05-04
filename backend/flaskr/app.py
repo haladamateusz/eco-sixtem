@@ -6,14 +6,14 @@ import urllib.parse
 app = Flask(__name__)
 CORS(app)
 
-@app.route("/company-names")
+@app.route("/available-stocks")
 def company_names():
-    df = pd.read_csv('../all_factors.csv')
+    df = pd.read_csv('../input_data/companies.csv')
 
     # df = df[['companyLongName', 'ISIN_BC']].drop_duplicates(subset='companyLongName')
     # print(len(list(df['companyLongName'].unique())))
 
-    return list(df['companyLongName'].unique())
+    return df[['companyLongName', 'ISIN_BC']].to_json(orient="records")
 
 @app.route("/company-esg/<company>")
 def company_esg(company):

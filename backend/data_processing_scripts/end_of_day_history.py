@@ -7,7 +7,12 @@ from six_api_requests import FinancialDataAPI
 
 #dataframeFoundOnly = pd.read_csv('../input_data/lookup_status_found.csv')
 
-filename = 'EUESGMANUFACTURER-LIGHT'
+excel_data = {
+  'LIGHT': 'EUESGMANUFACTURER-LIGHT',
+  'STANDARD': 'EUESGMANUFACTURER',
+}
+
+filename = excel_data['STANDARD']
 
 df = pd.read_csv(f'''../input_data/{filename}.csv''')
 
@@ -24,7 +29,7 @@ thirty_days_ago = (datetime.datetime.today() - datetime.timedelta(days=30)).strf
 
 def send_end_of_day_history_request(companyLongName: str, ISIN_BC: str, dateFrom: str, dateTo: str):
   time.sleep(1)
-  print('Making API request for: ', companyLongName, ISIN_BC)
+  # print('Making API request for: ', companyLongName, ISIN_BC)
   try:
     intraday_snapshot = findata.endOfDayHistory("ISIN_BC", [ISIN_BC], dateFrom, dateTo)
   except:
@@ -34,9 +39,10 @@ def send_end_of_day_history_request(companyLongName: str, ISIN_BC: str, dateFrom
     return get(intraday_snapshot, 'data.listings')[0]['lookupStatus']
 
 
-data.reset_index()
+data.reset_index(drop=True, inplace=True)
 
 for index, row in data.iterrows():
+  print(str(index+1) + ' of ' + str(data[data.columns[0]].count()+1))
   val = send_end_of_day_history_request(row['companyLongName'], row['ISIN_BC'], thirty_days_ago, thirty_days_ago)
   data.loc[df.index[index], 'lookupStatus'] = val
   lookupStatusFile = open(f'''lookup_status_end_of_day_history_{filename}.csv''', 'wb')

@@ -56,7 +56,6 @@ class FinancialDataAPI:
         """
         Retrieve End of Day Timeseries data.
         """
-        print(listings)
         end_point = "/v1/listings/marketData/endOfDayHistory"
         query_string = {
             'scheme': scheme,

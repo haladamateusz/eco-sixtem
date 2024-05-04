@@ -3,7 +3,12 @@ import time
 from six_api_requests import FinancialDataAPI
 from pydash import get
 
-filename = 'EUESGMANUFACTURER-LIGHT'
+excel_data = {
+  'LIGHT': 'EUESGMANUFACTURER-LIGHT',
+  'STANDARD': 'EUESGMANUFACTURER',
+}
+
+filename = excel_data['STANDARD']
 
 df = pd.read_csv(f'''../input_data/{filename}.csv''')
 
