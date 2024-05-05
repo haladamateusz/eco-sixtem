@@ -2,8 +2,8 @@
 <mat-form-field class="w-100">
   <mat-label>Select sappling</mat-label>
   <mat-select ngDefaultControl [(ngModel)]="sapling">
-    <mat-option *ngFor="let company of companies$ | async" [value]="company">
-      {{ company }}</mat-option
+    <mat-option *ngFor="let manufacturer of manufacturers$ | async" [value]="manufacturer.ISIN_BC">
+      {{ manufacturer.companyLongName }}</mat-option
     >
   </mat-select>
 </mat-form-field>

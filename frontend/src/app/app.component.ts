@@ -6,6 +6,8 @@ import { WalletComponent } from './wallet/components/wallet-shell/wallet.compone
 import { SingleAssetComponent } from './wallet/components/single-asset/single-asset.component';
 import { WelcomeModalComponent } from './modals/welcome-modal/welcome-modal.component';
 import { PlantSaplingModalComponent } from './modals/plant-sappling-modal/plant-sapling-modal.component';
+import { first, forkJoin, switchMap } from 'rxjs';
+import { ManufacturerService } from './shared/service/manufacturer/manufacturer.service';
 
 interface Cloud {
   posX: number;
@@ -55,6 +57,8 @@ export class AppComponent implements OnInit {
 
   // loadedCompanies: LoadedCompany[] = [];
 
+  manufacturerService: ManufacturerService = inject(ManufacturerService);
+
   dialog: MatDialog = inject(MatDialog);
 
   ngOnInit(): void {
@@ -69,11 +73,25 @@ export class AppComponent implements OnInit {
   }
 
   openPlantSaplingModal(): void {
-    this.dialog.open(PlantSaplingModalComponent, {
-      minWidth: 600,
-      maxWidth: 600,
-      minHeight: 200
-    });
+    this.dialog
+      .open(PlantSaplingModalComponent, {
+        minWidth: 600,
+        maxWidth: 600,
+        minHeight: 200
+      })
+      .afterClosed()
+      .pipe(
+        first(),
+        switchMap((isinBcCode: string) =>
+          forkJoin([
+            this.manufacturerService.getEndOfDayHistory(isinBcCode),
+            this.manufacturerService.getIntradaySnapshot(isinBcCode)
+          ])
+        )
+      )
+      .subscribe((result: any) => {
+        console.log('result', result);
+      });
   }
 }
 

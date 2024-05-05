@@ -6,8 +6,9 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { Observable } from 'rxjs';
-import { CompanyService } from '../../shared/services/company/company.service';
+import { ManufacturerService } from '../../shared/service/manufacturer/manufacturer.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Manufacturer } from '../../shared/model/manufacturer/manufacturer.interface';
 
 @Component({
   selector: 'app-plant-sapling-modal',
@@ -17,7 +18,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   styleUrls: ['./plant-sapling-modal.component.scss']
 })
 export class PlantSaplingModalComponent {
-  companyService: CompanyService = inject(CompanyService);
+  companyService: ManufacturerService = inject(ManufacturerService);
 
   dialog: MatDialogRef<PlantSaplingModalComponent> = inject(
     MatDialogRef<PlantSaplingModalComponent>
@@ -25,8 +26,8 @@ export class PlantSaplingModalComponent {
 
   sapling = '';
 
-  companies$: Observable<string[]> = this.companyService
-    .getCompanyNames()
+  manufacturers$: Observable<Manufacturer[]> = this.companyService
+    .getManufacturers()
     .pipe(takeUntilDestroyed());
 
   onClose(): void {
