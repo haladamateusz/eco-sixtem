@@ -89,8 +89,9 @@ export class AppComponent implements OnInit {
           ])
         )
       )
-      .subscribe((result: any) => {
-        console.log('result', result);
+      .subscribe(([a, b]: [any, any]) => {
+        console.log('end of day history', a);
+        console.log('intraday snapshot', b);
       });
   }
 }
