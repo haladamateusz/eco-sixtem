@@ -1,11 +1,69 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="32px" height="24px" viewBox="0 0 32 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <title>􀋮</title>
-    <g id="Phytax-logo" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" font-family="SFProRounded-Bold, SF Pro Rounded" font-size="20" font-weight="bold">
-        <g id="Artboard-Copy-7" transform="translate(-39, -375)" fill="#232323">
-            <text id="􀋮">
-                <tspan x="39" y="394">􀋮</tspan>
-            </text>
-        </g>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="37"
+   height="37"
+   viewBox="0 0 37 37"
+   version="1.1"
+   id="svg1"
+   sodipodi:docname="governance_factor.svg"
+   inkscape:version="1.3.2 (091e20e, 2023-11-25)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <defs
+     id="defs1" />
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="9.8333333"
+     inkscape:cx="15.966102"
+     inkscape:cy="12"
+     inkscape:window-width="1496"
+     inkscape:window-height="905"
+     inkscape:window-x="0"
+     inkscape:window-y="34"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg1" />
+  <title
+     id="title1">􀋮</title>
+  <g
+     id="Phytax-logo"
+     stroke="none"
+     stroke-width="1"
+     fill="none"
+     fill-rule="evenodd"
+     font-family="SFProRounded-Bold, 'SF Pro Rounded'"
+     font-size="20px"
+     font-weight="bold"
+     transform="matrix(1.3104205,0,0,1.3104205,-1.8665448,2.815905)">
+    <g
+       id="Artboard-Copy-7"
+       transform="translate(-39,-375)"
+       fill="#232323">
+      <text
+         id="􀋮"><tspan
+           x="39"
+           y="394"
+           id="tspan1">􀋮</tspan></text>
     </g>
+  </g>
+  <metadata
+     id="metadata1">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:title>􀋮</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
 </svg>
