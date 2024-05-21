@@ -1,6 +1,8 @@
 <div>
   <h3>Metrics</h3>
-  <app-single-metric [metric]="revenue" />
+  @if (revenue$ | async; as revenue) {
+    <app-single-metric [metric]="revenue" />
+  }
 </div>
 <div class="mt-4">
   <h4>ESG Factors</h4>

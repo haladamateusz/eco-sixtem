@@ -1,20 +1,30 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { Manufacturer } from '../../model/manufacturer/manufacturer.interface';
+import { WalletManufacturer } from '../../model/manufacturer/wallet-manufacturer.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WalletService {
-  manufacturers$: BehaviorSubject<Manufacturer[]> = new BehaviorSubject<Manufacturer[]>([]);
+  private manufacturers$: BehaviorSubject<WalletManufacturer[]> = new BehaviorSubject<
+    WalletManufacturer[]
+  >([]);
 
-  getManufacturers(): Observable<Manufacturer[]> {
+  getManufacturers(): Observable<WalletManufacturer[]> {
     return this.manufacturers$.asObservable();
   }
 
-  addManufacturer(manufacturer: Manufacturer): void {
-    const manufacturers: Manufacturer[] = this.manufacturers$.getValue();
+  addManufacturer(manufacturer: WalletManufacturer): void {
+    const manufacturers: WalletManufacturer[] = this.manufacturers$.getValue();
     manufacturers.push(manufacturer);
     this.manufacturers$.next(manufacturers);
+  }
+
+  removeManufacturer(ISIN_BC: string): void {
+    const manufacturers: WalletManufacturer[] = this.manufacturers$.getValue();
+    const updatedManufacturers: WalletManufacturer[] = manufacturers.filter(
+      (manufacturer: WalletManufacturer) => manufacturer.ISIN_BC !== ISIN_BC
+    );
+    this.manufacturers$.next(updatedManufacturers);
   }
 }

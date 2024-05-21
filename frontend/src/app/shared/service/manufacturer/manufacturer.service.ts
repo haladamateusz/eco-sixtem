@@ -19,6 +19,10 @@ export class ManufacturerService {
     );
   }
 
+  getRevenue(isin_bc: string): Observable<any> {
+    return this.httpClient.get<any>(`http://localhost:5000/manufacturers/${isin_bc}/revenue`);
+  }
+
   getIntradaySnapshot(isin_bc: string): Observable<any> {
     return this.httpClient.get<any>(
       `http://localhost:5000/manufacturers/${isin_bc}/intraday_snapshot`

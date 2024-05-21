@@ -11,16 +11,17 @@ CORS(app)
 findata = FinancialDataAPI('/Users/mateuszhalada/Hackaton_St_Gallen/eco-sixtem/backend/flaskr/certificates')
 
 
-def getDayMonthAgo():
+def get_day_month_ago():
     days_ago = 30
     # check if 30 days ago was a weekend
     day_thirty_days_ago = int((datetime.datetime.today() - datetime.timedelta(days=days_ago)).strftime("%w"))
 
     if day_thirty_days_ago == 0:  # sunday
-      days_ago -= 1
+        days_ago -= 1
     if day_thirty_days_ago == 6:  # saturday
-      days_ago -= 2
+        days_ago -= 2
     return days_ago
+
 
 @app.route("/manufacturers")
 def manufacturers():
@@ -34,31 +35,41 @@ def manufacturers():
 
 @app.route("/manufacturers/<isin_bc>/revenue")
 def manufacturer_revenue(isin_bc):
-
     intraday_snapshot_request = findata.intradaySnapshot("ISIN_BC", [isin_bc])
     intraday_snapshot_details = get(intraday_snapshot_request, 'data.listings')[0]
-    intraday_snapshot_market_data = get(intraday_snapshot_details, 'marketData.intradaySnapshot')[0]
+    intraday_snapshot_market_data = get(intraday_snapshot_details, 'marketData.intradaySnapshot')
 
-    days_ago = getDayMonthAgo()
-    thirty_days_ago = (datetime.datetime.today() - datetime.timedelta(days=days_ago)).strftime("%Y-%m-%d")
+    days = get_day_month_ago()
+
+    thirty_days_ago = (datetime.datetime.today() - datetime.timedelta(days=days)).strftime("%Y-%m-%d")
+    print(thirty_days_ago)
 
     end_of_day_history_request = findata.endOfDayHistory("ISIN_BC", [isin_bc], thirty_days_ago, thirty_days_ago)
     end_of_day_history_details = get(end_of_day_history_request, 'data.listings')[0]
-    end_of_day_history_market_data = get(end_of_day_history_details, 'marketData.endOfTheDayHistory')[0]
-
+    end_of_day_history_market_data = get(end_of_day_history_details, 'marketData.endOfDayHistory')[0]
 
     df = pd.read_csv('../input_data/available_manufacturers.csv')
 
-    intraday_snapshot_avg =
+    if 'high' not in intraday_snapshot_market_data or 'low' not in intraday_snapshot_market_data:
+        intraday_snapshot_avg = intraday_snapshot_market_data['last']['value']
+    else:
+        intraday_snapshot_avg = (intraday_snapshot_market_data['high']['value'] +
+                                 intraday_snapshot_market_data['low']['value']) / 2
+
+    if 'high' not in end_of_day_history_market_data or 'low' not in end_of_day_history_market_data:
+        end_of_day_history_avg = end_of_day_history_market_data['close']
+    else:
+        end_of_day_history_avg = (end_of_day_history_market_data['high'] + end_of_day_history_market_data['low']) / 2
+
+    revenue = round(intraday_snapshot_avg - end_of_day_history_avg, 2)
 
     brr = {
       'ISIN_BC': isin_bc,
       'listingShortName': get(intraday_snapshot_details, 'lookup.listingShortName'),
       'companyLongName': df[df['ISIN_BC'] == isin_bc]['companyLongName'].iloc[0],
-      'revenue': 10
+      'revenue': revenue
     }
 
-    print(brr)
     return brr
 
 
@@ -67,9 +78,10 @@ def manufacturer_intraday_snapshot(isin_bc):
     request = findata.intradaySnapshot("ISIN_BC", [isin_bc])
     return get(request, 'data.listings')[0]
 
+
 @app.route("/manufacturers/<isin_bc>/end_of_day_history")
 def manufacturer_end_of_day_history(isin_bc):
-    days_ago = getDayMonthAgo()
+    days_ago = get_day_month_ago()
 
     thirty_days_ago = (datetime.datetime.today() - datetime.timedelta(days=days_ago)).strftime("%Y-%m-%d")
 
