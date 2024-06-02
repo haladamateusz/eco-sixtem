@@ -2,7 +2,7 @@ import pandas as pd
 import datetime
 from flask import Flask
 from flask_cors import CORS
-from data_processing_scripts.six_api_requests import FinancialDataAPI
+from six_api.financial_data import FinancialDataAPI
 from pydash import get
 
 app = Flask(__name__)
@@ -63,14 +63,12 @@ def manufacturer_revenue(isin_bc):
 
     revenue = round(intraday_snapshot_avg - end_of_day_history_avg, 2)
 
-    brr = {
+    return {
       'ISIN_BC': isin_bc,
       'listingShortName': get(intraday_snapshot_details, 'lookup.listingShortName'),
       'companyLongName': df[df['ISIN_BC'] == isin_bc]['companyLongName'].iloc[0],
       'revenue': revenue
     }
-
-    return brr
 
 
 @app.route("/manufacturers/<isin_bc>/intraday_snapshot")
@@ -86,9 +84,20 @@ def manufacturer_end_of_day_history(isin_bc):
     thirty_days_ago = (datetime.datetime.today() - datetime.timedelta(days=days_ago)).strftime("%Y-%m-%d")
 
     request = findata.endOfDayHistory("ISIN_BC", [isin_bc], thirty_days_ago, thirty_days_ago)
-    details = get(request, 'data.listings')[0]
+    return get(request, 'data.listings')[0]
 
-    return details
+
+@app.route("/manufacturers/<isin_bc>/esg")
+def esg_score(isin_bc):
+    df = pd.read_csv('../input_data/EUESGMANUFACTURER.csv')
+    df = df[df['ISIN_BC'] == isin_bc]
+
+    return {
+        'ESGClassification': df['ESGClassification'].iloc[0],
+        'ESGFactor': df['ESGFactor'].iloc[0],
+        'ESGFactorAmountLastYear': df['ESGFactorAmountLastYear'].iloc[0],
+        'ESGClassSymbol': df['ESGClassSymbol'].iloc[0]
+    }
 
 # @app.route("/company-esg/<company>")
 # def company_esg(company):

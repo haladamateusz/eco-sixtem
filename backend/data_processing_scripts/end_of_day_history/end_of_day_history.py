@@ -3,7 +3,7 @@ import datetime
 import time
 from pydash import get
 
-from six_api_requests import FinancialDataAPI
+from six_api.financial_data import FinancialDataAPI
 
 #dataframeFoundOnly = pd.read_csv('../input_data/lookup_status_found.csv')
 
@@ -14,9 +14,9 @@ excel_data = {
 
 filename = excel_data['STANDARD']
 
-df = pd.read_csv(f'''../input_data/{filename}.csv''')
+df = pd.read_csv(f'''../../input_data/{filename}.csv''')
 
-data = df[['companyLongName', 'ISIN_BC', 'LEI']].dropna().drop_duplicates(subset='companyLongName').copy()
+data = df[['companyLongName', 'ISIN_BC', 'LEI' 'ESGClassification', 'ESGFactorAmountLastYear', 'ESGClassSymbol']].dropna().drop_duplicates(subset='companyLongName').copy()
 
 findata = FinancialDataAPI('/Users/mateuszhalada/Hackaton_St_Gallen/eco-sixtem/backend/flaskr/certificates')
 

@@ -1,6 +1,6 @@
 import pandas as pd
 import time
-from six_api_requests import FinancialDataAPI
+from six_api.financial_data import FinancialDataAPI
 from pydash import get
 
 excel_data = {
@@ -10,7 +10,7 @@ excel_data = {
 
 filename = excel_data['STANDARD']
 
-df = pd.read_csv(f'''../input_data/{filename}.csv''')
+df = pd.read_csv(f'''../../input_data/{filename}.csv''')
 
 data = df[['companyLongName', 'ISIN_BC', 'LEI']].dropna().drop_duplicates(subset='companyLongName').copy()
 # print(data.info())

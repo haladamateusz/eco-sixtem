@@ -6,6 +6,7 @@ import ssl
 import json
 from typing import List, Dict, Any
 
+
 class APIError(Exception):
     def __init__(self, message: str, correlation_id: str = None):
         self.message = message
