@@ -1,7 +1,9 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Manufacturer } from '../../model/manufacturer/manufacturer.interface';
+import { ManufacturerDto } from '../../model/dto/manufacturer.dto';
+import { RevenueDto } from '../../model/dto/revenue.dto';
+import { EsgScoreDto } from '../../model/dto/esg-score.dto';
 
 @Injectable({
   providedIn: 'root'
@@ -9,23 +11,17 @@ import { Manufacturer } from '../../model/manufacturer/manufacturer.interface';
 export class ManufacturerService {
   httpClient: HttpClient = inject(HttpClient);
 
-  getManufacturers(): Observable<Manufacturer[]> {
-    return this.httpClient.get<Manufacturer[]>('http://localhost:5000/manufacturers');
+  getManufacturers(): Observable<ManufacturerDto[]> {
+    return this.httpClient.get<ManufacturerDto[]>('http://localhost:5000/manufacturers');
   }
 
-  getEndOfDayHistory(isin_bc: string): Observable<any> {
-    return this.httpClient.get<any>(
-      `http://localhost:5000/manufacturers/${isin_bc}/end_of_day_history`
+  getManufacturerRevenue(isin_bc: string): Observable<RevenueDto> {
+    return this.httpClient.get<RevenueDto>(
+      `http://localhost:5000/manufacturers/${isin_bc}/revenue`
     );
   }
 
-  getRevenue(isin_bc: string): Observable<any> {
-    return this.httpClient.get<any>(`http://localhost:5000/manufacturers/${isin_bc}/revenue`);
-  }
-
-  getIntradaySnapshot(isin_bc: string): Observable<any> {
-    return this.httpClient.get<any>(
-      `http://localhost:5000/manufacturers/${isin_bc}/intraday_snapshot`
-    );
+  getManufacturerEsgScore(isin_bc: string): Observable<EsgScoreDto> {
+    return this.httpClient.get<EsgScoreDto>(`http://localhost:5000/manufacturers/${isin_bc}/esg`);
   }
 }

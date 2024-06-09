@@ -4,5 +4,6 @@ export enum CaretType {
   ONE_UP = 'assets/carets/one_up.svg',
   ONE_DOWN = 'assets/carets/one_down.svg',
   TWO_DOWN = 'assets/carets/two_down.svg',
-  THREE_DOWN = 'assets/carets/three_down.svg'
+  THREE_DOWN = 'assets/carets/three_down.svg',
+  NO_CHANGE = ''
 }

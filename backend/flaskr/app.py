@@ -89,14 +89,15 @@ def manufacturer_end_of_day_history(isin_bc):
 
 @app.route("/manufacturers/<isin_bc>/esg")
 def esg_score(isin_bc):
-    df = pd.read_csv('../input_data/EUESGMANUFACTURER.csv')
-    df = df[df['ISIN_BC'] == isin_bc]
+    dfe = pd.read_csv('../data_processing_scripts/esg/environmental_factors/environmental_factors.csv')
+    dfs = pd.read_csv('../data_processing_scripts/esg/social_factors/social_factors.csv')
+    dfg = pd.read_csv('../data_processing_scripts/esg/governance_factors/governance_factors.csv')
 
     return {
-        'ESGClassification': df['ESGClassification'].iloc[0],
-        'ESGFactor': df['ESGFactor'].iloc[0],
-        'ESGFactorAmountLastYear': df['ESGFactorAmountLastYear'].iloc[0],
-        'ESGClassSymbol': df['ESGClassSymbol'].iloc[0]
+        'ISIN_BC': isin_bc,
+        'environmental': float(dfe[dfe['ISIN_BC'] == isin_bc]['environmentalFactorAverage'].iloc[0]),
+        'social': float(dfs[dfs['ISIN_BC'] == isin_bc]['socialFactorAverage'].iloc[0]),
+        'governance': float(dfg[dfg['ISIN_BC'] == isin_bc]['governanceFactorAverage'].iloc[0])
     }
 
 # @app.route("/company-esg/<company>")
