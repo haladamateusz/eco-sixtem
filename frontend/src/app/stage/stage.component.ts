@@ -37,7 +37,6 @@ export class StageComponent implements AfterViewInit {
     });
 
     const skyboxTexture = await Assets.load('assets/skybox.png');
-    console.log('zzz', typeof skyboxTexture);
     const skybox: Sprite = new Sprite(skyboxTexture);
     skybox.width = this.skyContainer.nativeElement.offsetWidth;
     this.sky.stage.addChild(skybox);
