@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { AfterViewChecked, Component, inject, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { NavbarComponent } from './navbar/navbar.component';
 import { MetricsComponent } from './metrics/components/metrics-shell/metrics.component';
@@ -12,6 +12,7 @@ import { WalletService } from './shared/service/wallet/wallet.service';
 import { WalletManufacturer } from './shared/model/manufacturer/wallet-manufacturer.interface';
 import { RevenueDto } from './shared/model/dto/revenue.dto';
 import { EsgScoreDto } from './shared/model/dto/esg-score.dto';
+import { StageComponent } from './stage/stage.component';
 
 interface Cloud {
   posX: number;
@@ -51,9 +52,15 @@ interface LoadedCompany {
   templateUrl: './app.component.html',
   standalone: true,
   styleUrls: ['./app.component.scss'],
-  imports: [NavbarComponent, MetricsComponent, WalletComponent, SingleAssetComponent]
+  imports: [
+    NavbarComponent,
+    MetricsComponent,
+    WalletComponent,
+    SingleAssetComponent,
+    StageComponent
+  ]
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, AfterViewChecked {
   manufacturerService: ManufacturerService = inject(ManufacturerService);
 
   walletService: WalletService = inject(WalletService);
@@ -69,6 +76,10 @@ export class AppComponent implements OnInit {
         minHeight: 300
       });
     }
+  }
+
+  ngAfterViewChecked() {
+    console.log('ngAfterViewChecked');
   }
 
   addManufacturerToWallet(): void {

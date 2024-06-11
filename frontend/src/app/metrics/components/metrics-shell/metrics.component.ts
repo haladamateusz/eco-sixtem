@@ -24,11 +24,13 @@ export class MetricsComponent {
   accumulateValues = (
     manufacturers: WalletManufacturer[],
     propertyToAccumulate: PropertyToAccumulate
-  ) =>
-    manufacturers.reduce(
+  ): number => {
+    const accumulatedValue = manufacturers.reduce(
       (acc: number, manufacturer: WalletManufacturer) => acc + manufacturer[propertyToAccumulate],
       0
     );
+    return Math.round(accumulatedValue * 100) / 100;
+  };
 
   revenueValue: Observable<number> = this.walletService.getManufacturers().pipe(
     takeUntilDestroyed(),
@@ -37,11 +39,13 @@ export class MetricsComponent {
 
   esgScoreValue: Observable<EsgScoreAccumulated> = this.walletService.getManufacturers().pipe(
     takeUntilDestroyed(),
-    map((manufacturers: WalletManufacturer[]) => ({
-      environmental: this.accumulateValues(manufacturers, 'environmental'),
-      social: this.accumulateValues(manufacturers, 'social'),
-      governance: this.accumulateValues(manufacturers, 'governance')
-    }))
+    map(
+      (manufacturers: WalletManufacturer[]): EsgScoreAccumulated => ({
+        environmental: this.accumulateValues(manufacturers, 'environmental'),
+        social: this.accumulateValues(manufacturers, 'social'),
+        governance: this.accumulateValues(manufacturers, 'governance')
+      })
+    )
   );
 
   revenue$: Observable<Metric> = this.revenueValue.pipe(
