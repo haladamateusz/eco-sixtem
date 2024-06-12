@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, ElementRef, inject, NgZone, ViewChild } from '@angular/core';
-import { Application, Assets, Sprite, TilingSprite } from 'pixi.js';
+import { Application, Assets, Texture, TilingSprite } from 'pixi.js';
+import { SkyService } from './sky/service/sky.service';
 
 @Component({
   selector: 'app-stage',
@@ -13,35 +14,23 @@ export class StageComponent implements AfterViewInit {
 
   @ViewChild('groundContainer') groundContainer!: ElementRef;
 
-  ngZone = inject(NgZone);
+  skyService: SkyService = inject(SkyService);
 
-  sky = new Application();
+  ngZone: NgZone = inject(NgZone);
 
   ground = new Application();
 
   ngAfterViewInit(): void {
     this.ngZone
       .runOutsideAngular(async (): Promise<void> => {
-        await this.renderSkyBackground();
         await this.renderGroundBackground();
-        await this.loadClouds();
+        await this.renderSky();
       })
       .then();
   }
 
-  async renderSkyBackground(): Promise<void> {
-    await this.sky.init({
-      background: '#1099bb',
-      width: this.skyContainer.nativeElement.offsetWidth,
-      height: 200
-    });
-
-    const skyboxTexture = await Assets.load('assets/skybox.png');
-    const skybox: Sprite = new Sprite(skyboxTexture);
-    skybox.width = this.skyContainer.nativeElement.offsetWidth;
-    this.sky.stage.addChild(skybox);
-
-    this.skyContainer.nativeElement.appendChild(this.sky.canvas);
+  async renderSky(): Promise<void> {
+    await this.skyService.loadSky(this.skyContainer);
   }
 
   async renderGroundBackground(): Promise<void> {
@@ -51,7 +40,7 @@ export class StageComponent implements AfterViewInit {
       height: 300
     });
 
-    const grassTexture = await Assets.load('assets/bck2_2.png');
+    const grassTexture: Texture = await Assets.load('assets/bck2_2.png');
     const grass: TilingSprite = new TilingSprite({
       scale: 1.8,
       texture: grassTexture,
@@ -61,22 +50,5 @@ export class StageComponent implements AfterViewInit {
     this.ground.stage.addChild(grass);
 
     this.groundContainer.nativeElement.appendChild(this.ground.canvas);
-  }
-
-  async loadClouds(): Promise<void> {
-    const cloudTexture = await Assets.load('assets/stage/sky/cloud_healthy.png');
-    const cloud: Sprite = new Sprite(cloudTexture);
-    cloud.scale = 0.5;
-    cloud.x = 30;
-    cloud.y = 30;
-    this.sky.stage.addChild(cloud);
-
-    let count = 0;
-    this.sky.ticker.add(() => {
-      count += 0.005;
-
-      cloud.x = 30 + Math.cos(count) * 10;
-      cloud.y = 30 + Math.sin(count) * 10;
-    });
   }
 }
