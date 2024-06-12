@@ -1,6 +1,6 @@
 import { ElementRef, Injectable } from '@angular/core';
 import { Application, Assets, Sprite, Texture } from 'pixi.js';
-import { BooleanMask } from '../../../shared/utils/boolean-mask/boolean-mask.class';
+import { BooleanMask } from '../../shared/utils/boolean-mask/boolean-mask.class';
 
 @Injectable({
   providedIn: 'root'
@@ -16,9 +16,9 @@ export class SkyService {
 
   private skyTextures: Map<string, Texture> = new Map<string, Texture>([]);
 
-  skyBooleanMap: BooleanMask | null = null;
+  private skyBooleanMask: BooleanMask | null = null;
 
-  async loadSkyAssets(): Promise<void> {
+  private async loadSkyAssets(): Promise<void> {
     for (const [name, path] of Object.entries(this.skyAssets)) {
       console.log('loading:', name);
       const newTexture: Texture = await Assets.load(path);
@@ -42,7 +42,7 @@ export class SkyService {
     skybox.height = this.sky.screen.height;
     skybox.label = 'skybox';
 
-    this.skyBooleanMap = new BooleanMask(skybox.width, skybox.height);
+    this.skyBooleanMask = new BooleanMask(skybox.width, skybox.height);
 
     this.sky.stage.addChild(skybox);
     skyContainer.nativeElement.appendChild(this.sky.canvas);
@@ -50,7 +50,7 @@ export class SkyService {
     this.renderClouds();
   }
 
-  renderClouds(): void {
+  private renderClouds(): void {
     const cloudTexture: Texture = this.skyTextures.get('healthyCloudTexture') as Texture;
     const clouds: Sprite[] = [];
 
@@ -66,7 +66,7 @@ export class SkyService {
         cloud.y = Math.round(30 + Math.random() * 80);
         ++attempts;
       } while (
-        !this.skyBooleanMap?.areaIsFree(
+        !this.skyBooleanMask?.areaIsFree(
           cloud.x,
           cloud.x + cloud.width,
           cloud.y,
@@ -77,7 +77,7 @@ export class SkyService {
 
       if (attempts === 1000) continue;
 
-      this.skyBooleanMap?.markAreaAsOccupied(
+      this.skyBooleanMask?.markAreaAsOccupied(
         cloud.x,
         cloud.x + cloud.width,
         cloud.y,

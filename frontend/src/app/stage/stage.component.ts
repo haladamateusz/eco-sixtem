@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, ElementRef, inject, NgZone, ViewChild } from '@angular/core';
-import { Application, Assets, Texture, TilingSprite } from 'pixi.js';
-import { SkyService } from './sky/service/sky.service';
+import { SkyService } from './sky/sky.service';
+import { GroundService } from './ground/ground.service';
 
 @Component({
   selector: 'app-stage',
@@ -16,17 +16,15 @@ export class StageComponent implements AfterViewInit {
 
   skyService: SkyService = inject(SkyService);
 
+  groundService: GroundService = inject(GroundService);
+
   ngZone: NgZone = inject(NgZone);
 
-  ground = new Application();
-
   ngAfterViewInit(): void {
-    this.ngZone
-      .runOutsideAngular(async (): Promise<void> => {
-        await this.renderGroundBackground();
-        await this.renderSky();
-      })
-      .then();
+    this.ngZone.runOutsideAngular(async (): Promise<void> => {
+      await this.renderGroundBackground();
+      await this.renderSky();
+    });
   }
 
   async renderSky(): Promise<void> {
@@ -34,21 +32,6 @@ export class StageComponent implements AfterViewInit {
   }
 
   async renderGroundBackground(): Promise<void> {
-    await this.ground.init({
-      background: '#10bb49',
-      width: this.groundContainer.nativeElement.offsetWidth,
-      height: 300
-    });
-
-    const grassTexture: Texture = await Assets.load('assets/bck2_2.png');
-    const grass: TilingSprite = new TilingSprite({
-      scale: 1.8,
-      texture: grassTexture,
-      width: this.groundContainer.nativeElement.offsetWidth,
-      height: 300
-    });
-    this.ground.stage.addChild(grass);
-
-    this.groundContainer.nativeElement.appendChild(this.ground.canvas);
+    await this.groundService.loadGround(this.groundContainer);
   }
 }
