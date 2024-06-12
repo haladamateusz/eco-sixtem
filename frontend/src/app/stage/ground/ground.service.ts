@@ -1,5 +1,5 @@
 import { ElementRef, Injectable } from '@angular/core';
-import { Application, Assets, Texture, TilingSprite } from 'pixi.js';
+import { Application, Assets, Sprite, Texture, TilingSprite } from 'pixi.js';
 import { BooleanMask } from '../../shared/utils/boolean-mask/boolean-mask.class';
 
 @Injectable({
@@ -10,12 +10,28 @@ export class GroundService {
 
   private groundAssets: { [key: string]: string } = {
     greenGrassTexture: 'assets/stage/ground/bck2_2.png',
-    greenGrassTexture2: 'assets/stage/ground/grass3.jpg'
+    greenGrassTexture2: 'assets/stage/ground/grass3.jpg',
+    debris1: 'assets/stage/ground/debris1.png',
+    debris2: 'assets/stage/ground/debris2.png',
+    debris3: 'assets/stage/ground/debris3.png',
+    debris4: 'assets/stage/ground/debris4.png',
+    debris5: 'assets/stage/ground/debris5.png',
+    plant1: 'assets/stage/ground/plant1.png',
+    plant2: 'assets/stage/ground/plant2.png',
+    plant3: 'assets/stage/ground/plant3.png',
+    plant4: 'assets/stage/ground/plant4.png',
+    dog: 'assets/stage/ground/dog.png',
+    sheep: 'assets/stage/ground/sheep.png',
+    rock1: 'assets/stage/ground/rock1.png',
+    rock2: 'assets/stage/ground/rock2.png',
+    treeDead: 'assets/stage/ground/tree_dead.png',
+    treeDying: 'assets/stage/ground/tree_dying.png',
+    treeHealthy: 'assets/stage/ground/tree_healthy.png'
   };
 
   private groundTextures: Map<string, Texture> = new Map<string, Texture>([]);
 
-  private groundBooleanMask: BooleanMask | null = null;
+  private groundBooleanMask!: BooleanMask;
 
   async loadGroundAssets(): Promise<void> {
     for (const [name, path] of Object.entries(this.groundAssets)) {
@@ -43,7 +59,50 @@ export class GroundService {
       scale: 0.5
     });
 
+    this.groundBooleanMask = new BooleanMask(grass.width, grass.height);
+
     this.ground.stage.addChild(grass);
     groundContainer.nativeElement.appendChild(this.ground.canvas);
+
+    this.renderTrees();
+  }
+
+  renderTrees(): void {
+    const treeTexture: Texture = this.groundTextures.get('treeHealthy') as Texture;
+
+    for (let i: number = 0; i < 20; i++) {
+      let attempts: number = 0;
+
+      const tree: Sprite = new Sprite(treeTexture);
+      tree.scale = 0.25;
+      tree.label = `tree-${i + 1}`;
+
+      do {
+        tree.x = Math.round(30 + Math.random() * 900);
+        tree.y = Math.round(30 + Math.random() * 175);
+        ++attempts;
+      } while (
+        !this.groundBooleanMask.areaIsFree(
+          tree.x,
+          tree.x + tree.width,
+          tree.y,
+          tree.y + tree.height
+        ) &&
+        attempts < 1000
+      );
+
+      if (attempts === 1000) continue;
+
+      this.groundBooleanMask.markAreaAsOccupied(
+        tree.x,
+        tree.x + tree.width,
+        tree.y,
+        tree.y + tree.height
+      );
+
+      this.ground.stage.addChild(tree);
+    }
+
+    console.log(this.ground.stage.children);
   }
 }
