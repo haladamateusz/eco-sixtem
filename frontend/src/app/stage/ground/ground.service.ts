@@ -9,7 +9,8 @@ export class GroundService {
   private ground: Application = new Application();
 
   private groundAssets: { [key: string]: string } = {
-    greenGrassTexture: 'assets/stage/ground/bck2_2.png'
+    greenGrassTexture: 'assets/stage/ground/bck2_2.png',
+    greenGrassTexture2: 'assets/stage/ground/grass3.jpg'
   };
 
   private groundTextures: Map<string, Texture> = new Map<string, Texture>([]);
@@ -33,13 +34,13 @@ export class GroundService {
       height: 300
     });
 
-    const groundTexture: Texture = this.groundTextures.get('greenGrassTexture') as Texture;
+    const groundTexture: Texture = this.groundTextures.get('greenGrassTexture2') as Texture;
 
     const grass: TilingSprite = new TilingSprite({
-      scale: 1.8,
       texture: groundTexture,
-      width: groundContainer.nativeElement.offsetWidth,
-      height: 300
+      width: groundContainer.nativeElement.offsetWidth * 2,
+      height: 300 * 2,
+      scale: 0.5
     });
 
     this.ground.stage.addChild(grass);
