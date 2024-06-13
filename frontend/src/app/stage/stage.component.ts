@@ -1,11 +1,12 @@
 import { AfterViewInit, Component, ElementRef, inject, NgZone, ViewChild } from '@angular/core';
 import { SkyService } from './sky/sky.service';
 import { GroundService } from './ground/ground.service';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-stage',
   standalone: true,
-  imports: [],
+  imports: [AsyncPipe],
   templateUrl: './stage.component.html',
   styleUrl: './stage.component.scss'
 })
@@ -19,9 +20,6 @@ export class StageComponent implements AfterViewInit {
   groundService: GroundService = inject(GroundService);
 
   ngZone: NgZone = inject(NgZone);
-
-  skyAssetsLoadingStatus = this.skyService.loaded$.asObservable();
-  groundAssetsLoadingStatus = this.groundService.loaded$.asObservable();
 
   ngAfterViewInit(): void {
     this.ngZone.runOutsideAngular(async (): Promise<void> => {

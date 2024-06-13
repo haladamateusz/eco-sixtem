@@ -7,7 +7,7 @@
 <div class="mt-4">
   <h4>ESG Factors</h4>
 
-  @for (metric of esgScore$| async;  track metric.value) {
+  @for (metric of esgScore$| async;  track metric.name) {
     <app-single-metric [metric]="metric" />
   }
 </div>

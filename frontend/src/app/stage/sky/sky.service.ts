@@ -2,7 +2,6 @@ import { ElementRef, Injectable } from '@angular/core';
 import { Application, Assets, ContainerChild, Sprite, Texture } from 'pixi.js';
 import { BooleanMask } from '../../shared/utils/boolean-mask/boolean-mask.class';
 import { findSpaceForElement } from '../utils/find-space-for-element.function';
-import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +12,7 @@ export class SkyService {
   private skyAssets: { [key: string]: string } = {
     skyboxTexture: 'assets/stage/sky/skybox.png',
     healthyCloudTexture: 'assets/stage/sky/cloud_healthy.png',
-    pollutedCloudTexture: 'assets/stage/sky//cloud_polluted.png'
+    pollutedCloudTexture: 'assets/stage/sky/cloud_polluted.png'
   };
 
   private skyTextures: Map<string, Texture> = new Map<string, Texture>([]);
@@ -21,26 +20,14 @@ export class SkyService {
   // remember to initialize booleanMask in loadSky method
   private skyBooleanMask!: BooleanMask;
 
-  totalAssets: number = Object.keys(this.skyAssets).length;
-
-  loaded$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
-
-  private async loadSkyAssets(): Promise<void> {
-    let loadedAssets: number = 0;
+  async loadSkyAssets(): Promise<void> {
     for (const [name, path] of Object.entries(this.skyAssets)) {
-      const newTexture: Texture = await Assets.load(path, () => {
-        loadedAssets++;
-        const loaded: number = Math.round((loadedAssets / this.totalAssets) * 100);
-        console.log(`loaded ${loaded}% of Ground Assets`);
-        this.loaded$.next(loaded);
-      });
+      const newTexture: Texture = await Assets.load(path);
       this.skyTextures.set(name, newTexture);
     }
   }
 
   async loadSky(skyContainer: ElementRef): Promise<void> {
-    await this.loadSkyAssets();
-
     await this.sky.init({
       background: '#1099bb',
       width: skyContainer.nativeElement.offsetWidth,
