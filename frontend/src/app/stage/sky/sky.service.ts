@@ -1,6 +1,8 @@
 import { ElementRef, Injectable } from '@angular/core';
 import { Application, Assets, ContainerChild, Sprite, Texture } from 'pixi.js';
 import { BooleanMask } from '../../shared/utils/boolean-mask/boolean-mask.class';
+import { findSpaceForElement } from '../utils/find-space-for-element.function';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -16,12 +18,22 @@ export class SkyService {
 
   private skyTextures: Map<string, Texture> = new Map<string, Texture>([]);
 
-  private skyBooleanMask: BooleanMask | null = null;
+  // remember to initialize booleanMask in loadSky method
+  private skyBooleanMask!: BooleanMask;
+
+  totalAssets: number = Object.keys(this.skyAssets).length;
+
+  loaded$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
 
   private async loadSkyAssets(): Promise<void> {
+    let loadedAssets: number = 0;
     for (const [name, path] of Object.entries(this.skyAssets)) {
-      console.log('loading:', name);
-      const newTexture: Texture = await Assets.load(path);
+      const newTexture: Texture = await Assets.load(path, () => {
+        loadedAssets++;
+        const loaded: number = Math.round((loadedAssets / this.totalAssets) * 100);
+        console.log(`loaded ${loaded}% of Ground Assets`);
+        this.loaded$.next(loaded);
+      });
       this.skyTextures.set(name, newTexture);
     }
   }
@@ -55,36 +67,18 @@ export class SkyService {
     const cloudTexture: Texture = this.skyTextures.get('healthyCloudTexture') as Texture;
 
     for (let i: number = 0; i < 20; i++) {
-      let attempts: number = 0;
-
-      const cloud: Sprite = new Sprite(cloudTexture);
+      let cloud: Sprite | null = new Sprite(cloudTexture);
       cloud.scale = 0.5;
       cloud.label = `cloud-${i + 1}`;
 
-      do {
-        cloud.x = Math.round(30 + Math.random() * 900);
-        cloud.y = Math.round(30 + Math.random() * 80);
-        ++attempts;
-      } while (
-        !this.skyBooleanMask?.areaIsFree(
-          cloud.x,
-          cloud.x + cloud.width,
-          cloud.y,
-          cloud.y + cloud.height
-        ) &&
-        attempts < 1000
-      );
+      cloud = findSpaceForElement(cloud, this.skyBooleanMask, 100, 900, {
+        offsetX: 30,
+        offsetY: 30
+      });
 
-      if (attempts === 1000) continue;
-
-      this.skyBooleanMask?.markAreaAsOccupied(
-        cloud.x,
-        cloud.x + cloud.width,
-        cloud.y,
-        cloud.y + cloud.height
-      );
-
-      this.sky.stage.addChild(cloud);
+      if (cloud !== null) {
+        this.sky.stage.addChild(cloud);
+      }
     }
   }
 

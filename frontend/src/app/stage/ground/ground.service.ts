@@ -1,6 +1,8 @@
 import { ElementRef, Injectable } from '@angular/core';
 import { Application, Assets, Sprite, Texture, TilingSprite } from 'pixi.js';
 import { BooleanMask } from '../../shared/utils/boolean-mask/boolean-mask.class';
+import { findSpaceForElement } from '../utils/find-space-for-element.function';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +24,7 @@ export class GroundService {
     plant4: 'assets/stage/ground/plant4.png',
     dog: 'assets/stage/ground/dog.png',
     sheep: 'assets/stage/ground/sheep.png',
+    ranger: 'assets/stage/ground/ranger.png',
     rock1: 'assets/stage/ground/rock1.png',
     rock2: 'assets/stage/ground/rock2.png',
     treeDead: 'assets/stage/ground/tree_dead.png',
@@ -33,10 +36,19 @@ export class GroundService {
 
   private groundBooleanMask!: BooleanMask;
 
+  totalAssets: number = Object.keys(this.groundAssets).length;
+
+  loaded$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
+
   async loadGroundAssets(): Promise<void> {
+    let loadedAssets: number = 0;
     for (const [name, path] of Object.entries(this.groundAssets)) {
-      console.log('loading:', name);
-      const newTexture: Texture = await Assets.load(path);
+      const newTexture: Texture = await Assets.load(path, () => {
+        loadedAssets++;
+        const loaded: number = Math.round((loadedAssets / this.totalAssets) * 100);
+        console.log(`loaded ${loaded}% of Ground Assets`);
+        this.loaded$.next(loaded);
+      });
       this.groundTextures.set(name, newTexture);
     }
   }
@@ -65,44 +77,73 @@ export class GroundService {
     groundContainer.nativeElement.appendChild(this.ground.canvas);
 
     this.renderTrees();
+    this.renderRanger();
+    this.renderDog();
+    this.renderSheeps();
   }
 
   renderTrees(): void {
     const treeTexture: Texture = this.groundTextures.get('treeHealthy') as Texture;
 
     for (let i: number = 0; i < 20; i++) {
-      let attempts: number = 0;
-
-      const tree: Sprite = new Sprite(treeTexture);
+      let tree: Sprite | null = new Sprite(treeTexture);
       tree.scale = 0.25;
       tree.label = `tree-${i + 1}`;
 
-      do {
-        tree.x = Math.round(30 + Math.random() * 900);
-        tree.y = Math.round(30 + Math.random() * 175);
-        ++attempts;
-      } while (
-        !this.groundBooleanMask.areaIsFree(
-          tree.x,
-          tree.x + tree.width,
-          tree.y,
-          tree.y + tree.height
-        ) &&
-        attempts < 1000
-      );
+      tree = findSpaceForElement(tree, this.groundBooleanMask, 100, 900, {
+        offsetX: 10,
+        offsetY: 5
+      });
 
-      if (attempts === 1000) continue;
-
-      this.groundBooleanMask.markAreaAsOccupied(
-        tree.x,
-        tree.x + tree.width,
-        tree.y,
-        tree.y + tree.height
-      );
-
-      this.ground.stage.addChild(tree);
+      if (tree !== null) {
+        this.ground.stage.addChild(tree);
+      }
     }
+  }
 
-    console.log(this.ground.stage.children);
+  renderSheeps(): void {
+    const sheepTexture: Texture = this.groundTextures.get('sheep') as Texture;
+
+    for (let i: number = 0; i < 5; i++) {
+      let sheep: Sprite | null = new Sprite(sheepTexture);
+
+      sheep = findSpaceForElement(sheep, this.groundBooleanMask, 100, 900, {
+        offsetX: 5,
+        offsetY: 100
+      });
+
+      if (sheep !== null) {
+        this.ground.stage.addChild(sheep);
+      }
+    }
+  }
+
+  renderDog(): void {
+    const dogTexture: Texture = this.groundTextures.get('dog') as Texture;
+    let dog: Sprite | null = new Sprite(dogTexture);
+
+    dog = findSpaceForElement(dog, this.groundBooleanMask, 100, 900, {
+      offsetX: 5,
+      offsetY: 100
+    });
+
+    if (dog !== null) {
+      this.ground.stage.addChild(dog);
+    }
+  }
+
+  renderRanger(): void {
+    const rangerTexture: Texture = this.groundTextures.get('ranger') as Texture;
+
+    let ranger: Sprite | null = new Sprite(rangerTexture);
+    ranger.scale = 0.75;
+    ranger = findSpaceForElement(ranger, this.groundBooleanMask, 100, 900, {
+      offsetX: 5,
+      offsetY: 100
+    });
+
+    if (ranger !== null) {
+      this.ground.stage.addChild(ranger);
+    }
   }
 }
