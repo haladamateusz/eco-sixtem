@@ -20,6 +20,9 @@ export class StageComponent implements AfterViewInit {
 
   ngZone: NgZone = inject(NgZone);
 
+  skyAssetsLoadingStatus = this.skyService.loaded$.asObservable();
+  groundAssetsLoadingStatus = this.groundService.loaded$.asObservable();
+
   ngAfterViewInit(): void {
     this.ngZone.runOutsideAngular(async (): Promise<void> => {
       await this.renderGroundBackground();
