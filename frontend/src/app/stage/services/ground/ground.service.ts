@@ -1,7 +1,8 @@
-import { ElementRef, Injectable } from '@angular/core';
-import { Application, Assets, Sprite, Texture, TilingSprite } from 'pixi.js';
+import { ElementRef, inject, Injectable } from '@angular/core';
+import { Application, FederatedPointerEvent, Sprite, Texture, TilingSprite } from 'pixi.js';
 import { BooleanMask } from '../../shared/utils/boolean-mask/boolean-mask.class';
 import { findSpaceForElement } from '../utils/find-space-for-element.function';
+import { AssetsService } from '../assets/assets.service';
 
 @Injectable({
   providedIn: 'root'
@@ -9,40 +10,11 @@ import { findSpaceForElement } from '../utils/find-space-for-element.function';
 export class GroundService {
   private ground: Application = new Application();
 
-  private groundAssets: { [key: string]: string } = {
-    greenGrassTexture: 'assets/stage/ground/bck2_2.png',
-    greenGrassTexture2: 'assets/stage/ground/grass3.jpg',
-    debris1: 'assets/stage/ground/debris/debris1.png',
-    debris2: 'assets/stage/ground/debris/debris2.png',
-    debris3: 'assets/stage/ground/debris/debris3.png',
-    debris4: 'assets/stage/ground/debris/debris4.png',
-    debris5: 'assets/stage/ground/debris/debris5.png',
-    plant1: 'assets/stage/ground/plants/plant1.png',
-    plant2: 'assets/stage/ground/plants/plant2.png',
-    plant3: 'assets/stage/ground/plants/plant3.png',
-    plant4: 'assets/stage/ground/plants/plant4.png',
-    dog: 'assets/stage/ground/animals/dog.png',
-    sheep: 'assets/stage/ground/animals/sheep.png',
-    ranger: 'assets/stage/ground/ranger.png',
-    rock1: 'assets/stage/ground/rocks/rock1.png',
-    rock2: 'assets/stage/ground/rocks/rock2.png',
-    treeDead: 'assets/stage/ground/trees/tree_dead.png',
-    treeDying: 'assets/stage/ground/trees/tree_dying.png',
-    treeHealthy: 'assets/stage/ground/trees/tree_healthy.png'
-  };
-
-  private groundTextures: Map<string, Texture> = new Map<string, Texture>([]);
-
   private groundBooleanMask!: BooleanMask;
 
   private containerWidth: number = 0;
 
-  async loadGroundAssets(): Promise<void> {
-    for (const [name, path] of Object.entries(this.groundAssets)) {
-      const newTexture: Texture = await Assets.load(path);
-      this.groundTextures.set(name, newTexture);
-    }
-  }
+  private readonly assetsService: AssetsService = inject(AssetsService);
 
   async loadGround(groundContainer: ElementRef): Promise<void> {
     this.containerWidth = groundContainer.nativeElement.offsetWidth - 30; // small offset
@@ -53,7 +25,7 @@ export class GroundService {
       height: 300
     });
 
-    const groundTexture: Texture = this.groundTextures.get('greenGrassTexture2') as Texture;
+    const groundTexture: Texture = this.assetsService.getTexture('greenGrassTexture2') as Texture;
 
     const grass: TilingSprite = new TilingSprite({
       texture: groundTexture,
@@ -77,7 +49,7 @@ export class GroundService {
   }
 
   renderTrees(): void {
-    const treeTexture: Texture = this.groundTextures.get('treeHealthy') as Texture;
+    const treeTexture: Texture = this.assetsService.getTexture('treeHealthy') as Texture;
 
     for (let i: number = 0; i < 20; i++) {
       let tree: Sprite | null = new Sprite(treeTexture);
@@ -96,7 +68,7 @@ export class GroundService {
   }
 
   renderSheep(): void {
-    const sheepTexture: Texture = this.groundTextures.get('sheep') as Texture;
+    const sheepTexture: Texture = this.assetsService.getTexture('sheep') as Texture;
 
     for (let i: number = 0; i < 5; i++) {
       let sheep: Sprite | null = new Sprite(sheepTexture);
@@ -113,7 +85,7 @@ export class GroundService {
   }
 
   renderDog(): void {
-    const dogTexture: Texture = this.groundTextures.get('dog') as Texture;
+    const dogTexture: Texture = this.assetsService.getTexture('dog') as Texture;
     let dog: Sprite | null = new Sprite(dogTexture);
 
     dog = findSpaceForElement(dog, this.groundBooleanMask, 100, this.containerWidth, {
@@ -127,10 +99,19 @@ export class GroundService {
   }
 
   renderRanger(): void {
-    const rangerTexture: Texture = this.groundTextures.get('ranger') as Texture;
+    const rangerTexture: Texture = this.assetsService.getTexture('ranger') as Texture;
 
     let ranger: Sprite | null = new Sprite(rangerTexture);
     ranger.scale = 0.75;
+    ranger.label = 'ranger-1';
+    ranger.eventMode = 'static';
+
+    console.log('ranger', ranger.isInteractive());
+
+    ranger.on('click', (event: FederatedPointerEvent) => {
+      console.log('Ranger clicked', event.target.label);
+    });
+
     ranger = findSpaceForElement(ranger, this.groundBooleanMask, 100, this.containerWidth, {
       offsetX: 5,
       offsetY: 100
@@ -143,10 +124,10 @@ export class GroundService {
 
   renderPlants(): void {
     const plants: Texture[] = [];
-    plants.push(this.groundTextures.get('plant1') as Texture);
-    plants.push(this.groundTextures.get('plant2') as Texture);
-    plants.push(this.groundTextures.get('plant3') as Texture);
-    plants.push(this.groundTextures.get('plant4') as Texture);
+    plants.push(this.assetsService.getTexture('plant1') as Texture);
+    plants.push(this.assetsService.getTexture('plant2') as Texture);
+    plants.push(this.assetsService.getTexture('plant3') as Texture);
+    plants.push(this.assetsService.getTexture('plant4') as Texture);
 
     for (let i: number = 0; i < 30; i++) {
       let plant: Sprite | null = new Sprite(plants[i % 4]);
@@ -163,8 +144,8 @@ export class GroundService {
 
   renderRocks(): void {
     const rocks: Texture[] = [];
-    rocks.push(this.groundTextures.get('rock1') as Texture);
-    rocks.push(this.groundTextures.get('rock2') as Texture);
+    rocks.push(this.assetsService.getTexture('rock1') as Texture);
+    rocks.push(this.assetsService.getTexture('rock2') as Texture);
 
     for (let i: number = 0; i < 30; i++) {
       let rock: Sprite | null = new Sprite(rocks[i % 2]);
@@ -181,11 +162,11 @@ export class GroundService {
 
   renderDebris(): void {
     const debris: Texture[] = [];
-    debris.push(this.groundTextures.get('debris1') as Texture);
-    debris.push(this.groundTextures.get('debris2') as Texture);
-    debris.push(this.groundTextures.get('debris3') as Texture);
-    debris.push(this.groundTextures.get('debris4') as Texture);
-    debris.push(this.groundTextures.get('debris5') as Texture);
+    debris.push(this.assetsService.getTexture('debris1') as Texture);
+    debris.push(this.assetsService.getTexture('debris2') as Texture);
+    debris.push(this.assetsService.getTexture('debris3') as Texture);
+    debris.push(this.assetsService.getTexture('debris4') as Texture);
+    debris.push(this.assetsService.getTexture('debris5') as Texture);
 
     for (let i: number = 0; i < 30; i++) {
       let debrisElement: Sprite | null = new Sprite(debris[i % 5]);

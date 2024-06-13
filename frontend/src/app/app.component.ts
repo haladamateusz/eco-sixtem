@@ -12,7 +12,7 @@ import { WalletService } from './shared/service/wallet/wallet.service';
 import { WalletManufacturer } from './shared/model/manufacturer/wallet-manufacturer.interface';
 import { RevenueDto } from './shared/model/dto/revenue.dto';
 import { EsgScoreDto } from './shared/model/dto/esg-score.dto';
-import { StageComponent } from './stage/stage.component';
+import { StageWrapperComponent } from './stage/components/stage-wrapper/stage-wrapper.component';
 
 @Component({
   selector: 'app-root',
@@ -24,7 +24,7 @@ import { StageComponent } from './stage/stage.component';
     MetricsComponent,
     WalletComponent,
     SingleAssetComponent,
-    StageComponent
+    StageWrapperComponent
   ]
 })
 export class AppComponent implements OnInit, AfterViewChecked {
