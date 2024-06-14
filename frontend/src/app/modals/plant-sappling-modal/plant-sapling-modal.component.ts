@@ -16,8 +16,7 @@ import { WalletManufacturer } from '../../shared/model/manufacturer/wallet-manuf
   selector: 'app-plant-sapling-modal',
   standalone: true,
   imports: [CommonModule, MatInputModule, MatSelectModule, FormsModule, MatButtonModule],
-  templateUrl: './plant-sapling-modal.component.html',
-  styleUrls: ['./plant-sapling-modal.component.scss']
+  templateUrl: './plant-sapling-modal.component.html'
 })
 export class PlantSaplingModalComponent {
   companyService: ManufacturerService = inject(ManufacturerService);

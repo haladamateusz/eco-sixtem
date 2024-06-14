@@ -4,9 +4,9 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { APP_INITIALIZER, importProvidersFrom } from '@angular/core';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideHttpClient } from '@angular/common/http';
-import { AssetsService } from './app/stage/services/assets/assets.service';
+import { TextureService } from './app/stage/services/texture/texture.service';
 
-const initializeApp = (assetsService: AssetsService) => {
+const initializeApp = (assetsService: TextureService) => {
   return () => assetsService.loadAssets().then(() => console.log('Textures loaded'));
 };
 
@@ -18,7 +18,7 @@ bootstrapApplication(AppComponent, {
     {
       provide: APP_INITIALIZER,
       useFactory: initializeApp,
-      deps: [AssetsService],
+      deps: [TextureService],
       multi: true
     }
   ]

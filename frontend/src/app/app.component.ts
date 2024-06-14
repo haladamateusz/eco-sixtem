@@ -1,4 +1,14 @@
-import { AfterViewChecked, Component, inject, OnInit } from '@angular/core';
+import {
+  AfterViewChecked,
+  AfterViewInit,
+  Component,
+  ElementRef,
+  inject,
+  OnInit,
+  QueryList,
+  ViewChild,
+  ViewChildren
+} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { NavbarComponent } from './navbar/navbar.component';
 import { MetricsComponent } from './metrics/components/metrics-shell/metrics.component';
@@ -12,7 +22,11 @@ import { WalletService } from './shared/service/wallet/wallet.service';
 import { WalletManufacturer } from './shared/model/manufacturer/wallet-manufacturer.interface';
 import { RevenueDto } from './shared/model/dto/revenue.dto';
 import { EsgScoreDto } from './shared/model/dto/esg-score.dto';
-import { StageWrapperComponent } from './stage/components/stage-wrapper/stage-wrapper.component';
+import { BaseStageComponent } from './stage/components/base-stage.component';
+import { SkyStageComponent } from './stage/components/sky-stage/sky-stage.component';
+import { GroundStageComponent } from './stage/components/ground-stage/ground-stage.component';
+import { MatButton } from '@angular/material/button';
+import { NgStyle } from '@angular/common';
 
 @Component({
   selector: 'app-root',
@@ -24,10 +38,20 @@ import { StageWrapperComponent } from './stage/components/stage-wrapper/stage-wr
     MetricsComponent,
     WalletComponent,
     SingleAssetComponent,
-    StageWrapperComponent
+    BaseStageComponent,
+    SkyStageComponent,
+    GroundStageComponent,
+    MatButton,
+    NgStyle
   ]
 })
-export class AppComponent implements OnInit, AfterViewChecked {
+export class AppComponent implements OnInit, AfterViewInit, AfterViewChecked {
+  @ViewChild(SkyStageComponent) skyStage!: SkyStageComponent;
+
+  @ViewChild(GroundStageComponent) groundStage!: GroundStageComponent;
+
+  @ViewChildren(MatButton, { read: ElementRef }) buttons!: QueryList<ElementRef>;
+
   manufacturerService: ManufacturerService = inject(ManufacturerService);
 
   walletService: WalletService = inject(WalletService);
@@ -43,6 +67,10 @@ export class AppComponent implements OnInit, AfterViewChecked {
         minHeight: 300
       });
     }
+  }
+
+  ngAfterViewInit(): void {
+    console.log(this.buttons);
   }
 
   ngAfterViewChecked() {
@@ -80,5 +108,28 @@ export class AppComponent implements OnInit, AfterViewChecked {
         this.walletService.addManufacturer(walletManufacturer);
         console.log('Wallet manufacturer', walletManufacturer);
       });
+  }
+
+  clearButtonsStyle(): void {
+    this.buttons.forEach((button: ElementRef) => {
+      button.nativeElement.style.backgroundColor = '';
+      button.nativeElement.style.color = 'black';
+    });
+  }
+
+  renderPredefinedScoreView(id: number): void {
+    this.clearButtonsStyle();
+    this.buttons!.get(id)!.nativeElement.style.backgroundColor = '#de3919';
+    this.buttons!.get(id)!.nativeElement.style.color = 'white';
+    switch (id) {
+      case 0:
+        this.skyStage.badScoreView();
+        this.groundStage.badScoreView();
+        break;
+      case 1:
+        this.skyStage.goodScoreView();
+        this.groundStage.goodScoreView();
+        break;
+    }
   }
 }

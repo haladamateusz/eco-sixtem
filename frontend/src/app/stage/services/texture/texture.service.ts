@@ -4,12 +4,13 @@ import { Assets, Texture } from 'pixi.js';
 @Injectable({
   providedIn: 'root'
 })
-export class AssetsService {
+export class TextureService {
   private textures: Map<string, Texture> = new Map<string, Texture>([]);
 
   private grassAssets: { [key: string]: string } = {
     greenGrassTexture: 'assets/stage/ground/bck2_2.png',
-    greenGrassTexture2: 'assets/stage/ground/grass3.jpg'
+    greenGrassTexture2: 'assets/stage/ground/grass3.jpg',
+    desertTexture: 'assets/stage/ground/bck1_2.png'
   };
 
   private debrisAssets: { [key: string]: string } = {
@@ -28,9 +29,9 @@ export class AssetsService {
   };
 
   private treeAssets: { [key: string]: string } = {
-    treeDead: 'assets/stage/ground/trees/tree_dead.png',
+    treeHealthy: 'assets/stage/ground/trees/tree_healthy.png',
     treeDying: 'assets/stage/ground/trees/tree_dying.png',
-    treeHealthy: 'assets/stage/ground/trees/tree_healthy.png'
+    treeDead: 'assets/stage/ground/trees/tree_dead.png'
   };
 
   private animalAssets: { [key: string]: string } = {
@@ -46,11 +47,16 @@ export class AssetsService {
   private skyAssets: { [key: string]: string } = {
     skyboxTexture: 'assets/stage/sky/skybox.png',
     healthyCloudTexture: 'assets/stage/sky/cloud_healthy.png',
-    dyingCloudTexture: 'assets/stage/sky/cloud_polluted.png'
+    pollutedCloudTexture: 'assets/stage/sky/cloud_polluted.png'
   };
 
-  private missingAsset: string = 'assets/stage/missing_texture.png';
-  private rangerAsset = 'assets/stage/ground/ranger.png';
+  private missingAssets: { [key: string]: string } = {
+    missingTexture: 'assets/stage/missing_texture.png'
+  };
+
+  private rangerAssets: { [key: string]: string } = {
+    ranger: 'assets/stage/ground/ranger.png'
+  };
 
   async loadAssets(): Promise<void> {
     const assets: { [key: string]: string } = {
@@ -61,7 +67,8 @@ export class AssetsService {
       ...this.animalAssets,
       ...this.rockAssets,
       ...this.skyAssets,
-      ...{ missingTexture: this.missingAsset, ranger: this.rangerAsset }
+      ...this.missingAssets,
+      ...this.rangerAssets
     };
 
     for (const [name, path] of Object.entries(assets)) {
@@ -71,6 +78,8 @@ export class AssetsService {
   }
 
   getTexture(name: string): Texture {
-    return this.textures.get(name) as Texture;
+    return this.textures.has(name)
+      ? (this.textures.get(name) as Texture)
+      : (this.textures.get('missingTexture') as Texture);
   }
 }

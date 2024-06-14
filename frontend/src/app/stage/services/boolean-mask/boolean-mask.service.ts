@@ -7,26 +7,34 @@ import { Sprite } from 'pixi.js';
 export class BooleanMaskService {
   booleanMask: Array<Array<boolean>> = [];
 
+  height: number = 0;
+
+  width: number = 0;
+
   initialize(width: number, height: number): void {
+    this.height = height;
+    this.width = width;
     this.booleanMask = Array(height)
       .fill(null)
       .map(() => Array(width).fill(false));
   }
 
+  reset(): void {
+    this.booleanMask = Array(this.height)
+      .fill(null)
+      .map(() => Array(this.width).fill(false));
+  }
+
   findSpaceForElement(
     element: Sprite,
     containerHeight: number,
-    containerWidth: number,
-    options = {
-      offsetX: 0,
-      offsetY: 0
-    }
+    containerWidth: number
   ): Sprite | null {
     let attempts: number = 0;
 
     do {
-      element.x = Math.round(options.offsetX + Math.random() * containerWidth);
-      element.y = Math.round(options.offsetY + Math.random() * containerHeight);
+      element.x = Math.round(Math.random() * containerWidth);
+      element.y = Math.round(Math.random() * containerHeight);
       ++attempts;
     } while (
       !this.areaIsFree(

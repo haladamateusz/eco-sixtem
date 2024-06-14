@@ -1,9 +1,17 @@
 import { Injectable } from '@angular/core';
+import { PropsBaseService } from '../props-base.service';
+import { Texture } from 'pixi.js';
+import { ElementType } from '../../../models/element-type.enum';
 
 @Injectable({
   providedIn: 'root'
 })
-export class RangerService {
+export class RangerService extends PropsBaseService {
+  override label: ElementType = ElementType.RANGER;
 
-  constructor() { }
+  override scale: number = 0.75;
+
+  override texture: Texture = this.assetsService.getTexture('ranger') as Texture;
+
+  //TODO: add ranger click event
 }
