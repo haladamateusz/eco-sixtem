@@ -1,6 +1,5 @@
 import {
   AfterViewChecked,
-  AfterViewInit,
   Component,
   ElementRef,
   inject,
@@ -45,7 +44,7 @@ import { NgStyle } from '@angular/common';
     NgStyle
   ]
 })
-export class AppComponent implements OnInit, AfterViewInit, AfterViewChecked {
+export class AppComponent implements OnInit, AfterViewChecked {
   @ViewChild(SkyStageComponent) skyStage!: SkyStageComponent;
 
   @ViewChild(GroundStageComponent) groundStage!: GroundStageComponent;
@@ -67,10 +66,6 @@ export class AppComponent implements OnInit, AfterViewInit, AfterViewChecked {
         minHeight: 300
       });
     }
-  }
-
-  ngAfterViewInit(): void {
-    console.log(this.buttons);
   }
 
   ngAfterViewChecked() {

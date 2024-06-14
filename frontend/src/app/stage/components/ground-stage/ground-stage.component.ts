@@ -44,7 +44,7 @@ export class GroundStageComponent extends BaseStageComponent {
     const background: TilingSprite = new TilingSprite({
       texture: backgroundTexture,
       width: this.application.screen.width * 2,
-      height: this.height * 2,
+      height: this.application.screen.height * 2,
       scale: 0.5
     });
 
@@ -120,7 +120,7 @@ export class GroundStageComponent extends BaseStageComponent {
     const background: TilingSprite = new TilingSprite({
       texture: backgroundTexture,
       width: this.application.screen.width * 2,
-      height: this.height * 2,
+      height: this.application.screen.height * 2,
       scale: 0.5
     });
 
