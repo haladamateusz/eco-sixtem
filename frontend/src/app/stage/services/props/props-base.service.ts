@@ -2,12 +2,15 @@ import { inject, Injectable } from '@angular/core';
 import { FederatedPointerEvent, Sprite, Texture } from 'pixi.js';
 import { TextureService } from '../texture/texture.service';
 import { ElementType } from '../../models/element-type.enum';
+import { PropDetailsService } from '../prop-detail/prop-details.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PropsBaseService {
   protected readonly assetsService: TextureService = inject(TextureService);
+
+  protected readonly propDetailService: PropDetailsService = inject(PropDetailsService);
 
   scale: number = 1;
 
@@ -20,12 +23,16 @@ export class PropsBaseService {
 
     sprite.scale = this.scale;
     sprite.eventMode = 'static';
+    sprite.label = id;
 
     sprite.onclick = (event: FederatedPointerEvent): void => {
-      event.stopPropagation();
-      console.log(window.scrollY, window.scrollX);
-      console.log(event.clientY, event.clientX);
-      console.log(event.target.label);
+      event.preventDefault();
+      console.log(event.target.label, event.x, event.y);
+      this.propDetailService.propClicked({
+        x: event.x,
+        y: event.y,
+        ISIN_BC: event.target.label
+      });
     };
 
     return sprite;

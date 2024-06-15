@@ -3,10 +3,12 @@ import {
   Component,
   ElementRef,
   inject,
+  Injector,
   OnInit,
   QueryList,
   ViewChild,
-  ViewChildren
+  ViewChildren,
+  ViewContainerRef
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -26,6 +28,10 @@ import { SkyStageComponent } from './stage/components/sky-stage/sky-stage.compon
 import { GroundStageComponent } from './stage/components/ground-stage/ground-stage.component';
 import { MatButton } from '@angular/material/button';
 import { NgStyle } from '@angular/common';
+import { OverlayRef } from '@angular/cdk/overlay';
+import { PropDetailsService } from './stage/services/prop-detail/prop-details.service';
+import { PropDetails } from './stage/models/prop-details.interface';
+import { OverlayService } from './stage/services/overlay/overlay.service';
 
 @Component({
   selector: 'app-root',
@@ -51,11 +57,21 @@ export class AppComponent implements OnInit, AfterViewChecked {
 
   @ViewChildren(MatButton, { read: ElementRef }) buttons!: QueryList<ElementRef>;
 
-  manufacturerService: ManufacturerService = inject(ManufacturerService);
+  overlayRef: OverlayRef | null = null;
 
-  walletService: WalletService = inject(WalletService);
+  private readonly overlayService: OverlayService = inject(OverlayService);
 
-  dialog: MatDialog = inject(MatDialog);
+  private readonly manufacturerService: ManufacturerService = inject(ManufacturerService);
+
+  private readonly walletService: WalletService = inject(WalletService);
+
+  private readonly propDetailsService: PropDetailsService = inject(PropDetailsService);
+
+  private readonly dialog: MatDialog = inject(MatDialog);
+
+  private readonly viewContainerRef: ViewContainerRef = inject(ViewContainerRef);
+
+  private readonly injector: Injector = inject(Injector);
 
   ngOnInit(): void {
     if (!localStorage.getItem('isFirstVisit')) {
@@ -66,10 +82,18 @@ export class AppComponent implements OnInit, AfterViewChecked {
         minHeight: 300
       });
     }
+
+    this.listenForStageClicks();
   }
 
   ngAfterViewChecked() {
     console.log('ngAfterViewChecked');
+  }
+
+  listenForStageClicks(): void {
+    this.propDetailsService.propDetails$.subscribe((propDetails: PropDetails) => {
+      this.overlayService.create(propDetails, this.viewContainerRef, this.injector);
+    });
   }
 
   addManufacturerToWallet(): void {
