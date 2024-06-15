@@ -7,7 +7,7 @@ import { ElementType } from '../../../models/element-type.enum';
   providedIn: 'root'
 })
 export class RangerService extends PropsBaseService {
-  override label: ElementType = ElementType.RANGER;
+  override type: ElementType = ElementType.RANGER;
 
   override scale: number = 0.75;
 

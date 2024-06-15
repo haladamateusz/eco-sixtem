@@ -7,7 +7,7 @@ import { Texture } from 'pixi.js';
   providedIn: 'root'
 })
 export class SheepService extends PropsBaseService {
-  override label: ElementType = ElementType.SHEEP;
+  override type: ElementType = ElementType.SHEEP;
 
   override texture: Texture = this.assetsService.getTexture('sheep') as Texture;
 }

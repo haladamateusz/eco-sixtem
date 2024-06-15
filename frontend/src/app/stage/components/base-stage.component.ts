@@ -63,15 +63,21 @@ export class BaseStageComponent implements AfterViewInit {
     this.container.nativeElement.appendChild(this.application.canvas);
   }
 
-  // We iterate from 1 due to id starting from 1
-  addElements(elementType: ElementType, amount: number): void {
-    for (let i: number = 1; i < amount + 1; i++) {
-      const id: number =
-        this.application.stage.children.filter((child: ContainerChild) =>
-          child.label.includes(elementType)
-        ).length + 1;
+  addElements(elementType: ElementType, amount: number, id: string | null = null): void {
+    for (let i: number = 0; i < amount; i++) {
+      let elementId: string = '';
+      if (id !== null) {
+        elementId = id;
+      } else {
+        const nextElemNumber: number =
+          this.application.stage.children.filter((child: ContainerChild) =>
+            child.label.includes(elementType)
+          ).length + 1;
 
-      let element: Sprite | null = this.elementFactory(elementType, id);
+        elementId = `${elementType}-${nextElemNumber}`;
+      }
+
+      let element: Sprite | null = this.elementFactory(elementType, elementId);
 
       const elementToRender: Sprite | null = this.booleanMaskService.findSpaceForElement(
         element,
@@ -86,7 +92,9 @@ export class BaseStageComponent implements AfterViewInit {
   }
 
   clearScene(): void {
-    this.application.stage.removeChildren(1);
+    if (this.application.stage.children.length > 1) {
+      this.application.stage.removeChildren(1);
+    }
     this.booleanMaskService.reset();
   }
 
@@ -98,7 +106,7 @@ export class BaseStageComponent implements AfterViewInit {
   renderElements(): void {}
 
   // override this method in child component
-  elementFactory(elementType: ElementType, id: number): Sprite {
+  elementFactory(elementType: ElementType, id: string): Sprite {
     switch (elementType) {
       default:
         const missingTexture: Texture = this.assetsService.getTexture('missingTexture');

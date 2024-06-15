@@ -128,3 +128,32 @@ export class AppComponent implements OnInit, AfterViewChecked {
     }
   }
 }
+
+// E
+//
+// Trees: (E)
+// Score is high - healthy tree
+// Score is low - dead tree
+
+// Clouds: (E)
+// Score is low - polluted cloud
+// Score is high - healthy cloud
+
+// Plants (E)
+// Score above > .5 - we render them
+//
+// S
+//
+// Dog
+// Score above > .5  render dog, then above each of 0.1 we render additional dog
+// Sheep  above > .5  render sheep, then above each of 0.1 we render additional sheep
+
+//
+// G
+//
+// Debris (G)
+// Score below .5 >  we render them
+// Rock
+// Score below .5 > we render them
+// Ranger
+// SCore above > .5 then above each of 0.1 we render additional dog

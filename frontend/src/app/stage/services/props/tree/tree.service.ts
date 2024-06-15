@@ -14,7 +14,7 @@ export class TreeService extends PropsBaseService {
   ];
   override scale: number = 0.25;
 
-  override label: ElementType = ElementType.TREE;
+  override type: ElementType = ElementType.TREE;
 
   override texture: Texture = this.assetsService.getTexture('treeHealthy') as Texture;
 

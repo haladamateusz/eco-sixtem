@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { PropsBaseService } from '../props-base.service';
-import { Sprite, Texture } from 'pixi.js';
+import { FederatedPointerEvent, Sprite, Texture } from 'pixi.js';
 import { ElementType } from '../../../models/element-type.enum';
 
 @Injectable({
@@ -14,13 +14,9 @@ export class CloudService extends PropsBaseService {
 
   override scale: number = 0.5;
 
-  override label: ElementType = ElementType.CLOUD;
+  override type: ElementType = ElementType.CLOUD;
 
   override texture: Texture = this.assetsService.getTexture('healthyCloudTexture') as Texture;
-
-  override render(id: number): Sprite {
-    return super.render(id);
-  }
 
   changeTextureToPolluted(): void {
     this.texture = this.cloudTextures[1];
@@ -28,5 +24,16 @@ export class CloudService extends PropsBaseService {
 
   changeTextureToHealthy(): void {
     this.texture = this.cloudTextures[0];
+  }
+
+  override render(id: string): Sprite {
+    const sprite: Sprite = super.render(id);
+    sprite.eventMode = 'dynamic';
+    sprite.onclick = (event: FederatedPointerEvent): void => {
+      event.preventDefault();
+      console.log(event.target.label);
+    };
+
+    return sprite;
   }
 }

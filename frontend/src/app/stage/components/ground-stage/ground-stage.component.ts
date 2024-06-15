@@ -53,14 +53,15 @@ export class GroundStageComponent extends BaseStageComponent {
   }
 
   override renderElements() {
-    this.addElements(ElementType.TREE, 30);
-    this.addElements(ElementType.SHEEP, 5);
-    this.addElements(ElementType.RANGER, 1);
-    this.addElements(ElementType.DOG, 1);
-    this.addElements(ElementType.PLANT, 30);
+    // this.addElements(ElementType.TREE, 30);
+    // this.addElements(ElementType.SHEEP, 5);
+    // this.addElements(ElementType.RANGER, 1);
+    // this.addElements(ElementType.DOG, 1);
+    // this.addElements(ElementType.PLANT, 30);
+    // this.addElements(ElementType.DEBRIS, 20);
   }
 
-  override elementFactory(elementType: ElementType, id: number): Sprite {
+  override elementFactory(elementType: ElementType, id: string): Sprite {
     switch (elementType) {
       case ElementType.TREE:
         return this.treeService.render(id);

@@ -9,5 +9,5 @@ import { ElementType } from '../../../models/element-type.enum';
 export class DogService extends PropsBaseService {
   override texture: Texture = this.assetsService.getTexture('dog') as Texture;
 
-  override label: ElementType = ElementType.DOG;
+  override type: ElementType = ElementType.DOG;
 }

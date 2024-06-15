@@ -19,11 +19,11 @@ export class SkyStageComponent extends BaseStageComponent {
   override backgroundAsset: string = 'skyboxTexture';
 
   override renderElements(): void {
-    this.addElements(ElementType.CLOUD, 10);
-    this.animateClouds();
+    // this.addElements(ElementType.CLOUD, 10);
+    // this.animateClouds();
   }
 
-  override elementFactory(elementType: ElementType, id: number): Sprite {
+  override elementFactory(elementType: ElementType, id: string): Sprite {
     switch (elementType) {
       case ElementType.CLOUD:
         return this.cloudService.render(id);

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { PropsBaseService } from '../props-base.service';
 import { Sprite, Texture } from 'pixi.js';
 import { ElementType } from '../../../models/element-type.enum';
+import { getRandomInteger } from '../../../../shared/utils/get-random-integer.function';
 
 @Injectable({
   providedIn: 'root'
@@ -15,13 +16,12 @@ export class DebrisService extends PropsBaseService {
     this.assetsService.getTexture('debris5') as Texture
   ];
 
-  override label: ElementType = ElementType.DEBRIS;
+  override type: ElementType = ElementType.DEBRIS;
 
-  override texture: Texture = this.assetsService.getTexture('debris') as Texture;
+  override texture: Texture = this.assetsService.getTexture('debris1') as Texture;
 
-  override render(id: number): Sprite {
-    let sprite: Sprite | null = new Sprite(this.debrisTextures[id % 5]);
-    sprite.label = `${this.label}-${id + 1}`;
-    return sprite;
+  override render(id: string): Sprite {
+    this.texture = this.debrisTextures[getRandomInteger(0, 5)];
+    return super.render(id);
   }
 }
