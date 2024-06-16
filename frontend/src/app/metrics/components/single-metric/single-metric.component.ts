@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { Metric } from '../../intefaces/metric.interface';
-import { CaretType } from '../../enums/caret-type.enum';
+import { EsgCaretIcon } from '../../enums/esg-caret-icon.enum';
 
 @Component({
   selector: 'app-single-metric',
@@ -11,7 +11,7 @@ import { CaretType } from '../../enums/caret-type.enum';
   styleUrls: ['./single-metric.component.scss']
 })
 export class SingleMetricComponent {
-  CaretType = CaretType;
+  EsgCaretIcon = EsgCaretIcon;
 
   @Input({ required: true }) metric!: Metric;
 }

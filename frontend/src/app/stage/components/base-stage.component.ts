@@ -1,8 +1,10 @@
 import { AfterViewInit, Component, ElementRef, inject, NgZone, ViewChild } from '@angular/core';
-import { Application, ContainerChild, Sprite, Texture } from 'pixi.js';
+import { Application, ContainerChild, Sprite, Texture, Ticker } from 'pixi.js';
 import { TextureService } from '../services/texture/texture.service';
 import { BooleanMaskService } from '../services/boolean-mask/boolean-mask.service';
 import { ElementType } from '../models/element-type.enum';
+import { FactorType } from '../models/esg.enum';
+import { CaretService } from '../services/caret/caret.service';
 
 @Component({
   selector: 'app-stage',
@@ -10,21 +12,25 @@ import { ElementType } from '../models/element-type.enum';
   template: '<div class="d-flex" #container></div>'
 })
 export class BaseStageComponent implements AfterViewInit {
-  @ViewChild('container') container!: ElementRef;
+  @ViewChild('container') protected container!: ElementRef;
 
-  height: number = 200;
+  protected height: number = 200;
 
-  backgroundColor: string = '#d3d3d3';
+  protected backgroundColor: string = '#d3d3d3';
 
-  backgroundAsset: string = '';
+  protected backgroundAsset: string = '';
 
   protected application: Application = new Application();
 
-  ngZone: NgZone = inject(NgZone);
+  protected ngZone: NgZone = inject(NgZone);
+
+  protected ticker: Ticker = new Ticker();
 
   private readonly booleanMaskService: BooleanMaskService = new BooleanMaskService();
 
   protected readonly assetsService: TextureService = inject(TextureService);
+
+  protected caretService: CaretService = inject(CaretService);
 
   ngAfterViewInit(): void {
     this.ngZone.runOutsideAngular(async (): Promise<void> => {
@@ -40,11 +46,10 @@ export class BaseStageComponent implements AfterViewInit {
       );
 
       this.renderBackground();
-      this.renderElements();
     });
   }
 
-  renderBackground(): void {
+  protected renderBackground(): void {
     if (!this.backgroundAsset) {
       this.container.nativeElement.appendChild(this.application.canvas);
       return;
@@ -63,11 +68,11 @@ export class BaseStageComponent implements AfterViewInit {
     this.container.nativeElement.appendChild(this.application.canvas);
   }
 
-  addElements(elementType: ElementType, amount: number, id: string | null = null): void {
+  protected addElements(elementType: ElementType, amount: number, id: string | null = null): void {
     for (let i: number = 0; i < amount; i++) {
       let elementId: string = '';
       if (id !== null) {
-        elementId = id;
+        elementId = `${elementType}@${id}`;
       } else {
         const nextElemNumber: number =
           this.application.stage.children.filter((child: ContainerChild) =>
@@ -91,7 +96,7 @@ export class BaseStageComponent implements AfterViewInit {
     }
   }
 
-  clearScene(): void {
+  protected clearScene(): void {
     if (this.application.stage.children.length > 1) {
       this.application.stage.removeChildren(1);
     }
@@ -103,10 +108,10 @@ export class BaseStageComponent implements AfterViewInit {
   goodScoreView(): void {}
 
   // override this method in child component
-  renderElements(): void {}
+  renderElements(factorType: FactorType, score: number, id: string, revenue: number): void {}
 
   // override this method in child component
-  elementFactory(elementType: ElementType, id: string): Sprite {
+  protected elementFactory(elementType: ElementType, id: string): Sprite {
     switch (elementType) {
       default:
         const missingTexture: Texture = this.assetsService.getTexture('missingTexture');

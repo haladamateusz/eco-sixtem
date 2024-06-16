@@ -9,6 +9,11 @@ import { RangerService } from '../../services/props/ranger/ranger.service';
 import { PlantService } from '../../services/props/plant/plant.service';
 import { DebrisService } from '../../services/props/debris/debris.service';
 import { DogService } from '../../services/props/dog/dog.service';
+import { WolfService } from '../../services/props/wolf/wolf.service';
+import { BugService } from '../../services/props/bug/bug.service';
+import { ChickenService } from '../../services/props/chicken/chicken.service';
+import { FactorType } from '../../models/esg.enum';
+import { CaretType } from '../../models/caret-type.enum';
 
 @Component({
   selector: 'app-ground-stage',
@@ -30,13 +35,19 @@ export class GroundStageComponent extends BaseStageComponent {
 
   private readonly dogService: DogService = inject(DogService);
 
-  override backgroundColor: string = '#10bb49';
+  private readonly bugService: BugService = inject(BugService);
 
-  override backgroundAsset: string = 'greenGrassTexture2';
+  private readonly wolfService: WolfService = inject(WolfService);
 
-  override height: number = 400;
+  private readonly chickenService: ChickenService = inject(ChickenService);
 
-  override renderBackground(): void {
+  protected override backgroundColor: string = '#10bb49';
+
+  protected override backgroundAsset: string = 'greenGrassTexture2';
+
+  protected override height: number = 400;
+
+  protected override renderBackground(): void {
     const backgroundTexture: Texture = this.assetsService.getTexture(
       this.backgroundAsset
     ) as Texture;
@@ -52,16 +63,65 @@ export class GroundStageComponent extends BaseStageComponent {
     this.container.nativeElement.appendChild(this.application.canvas);
   }
 
-  override renderElements() {
-    // this.addElements(ElementType.TREE, 30);
-    // this.addElements(ElementType.SHEEP, 5);
-    // this.addElements(ElementType.RANGER, 1);
-    // this.addElements(ElementType.DOG, 1);
-    // this.addElements(ElementType.PLANT, 30);
-    // this.addElements(ElementType.DEBRIS, 20);
+  override renderElements(factorType: FactorType, score: number, id: string, revenue: number) {
+    switch (factorType) {
+      case FactorType.ENVIRONMENTAL:
+        if (score > 0.5) {
+          this.treeService.changeTreeTextureToHealthy();
+          this.addElements(ElementType.TREE, 1, id);
+          this.renderCaret(ElementType.TREE, id, revenue);
+        } else {
+          this.treeService.changeTreeTextureToDead();
+          this.addElements(ElementType.TREE, 1, id);
+          this.renderCaret(ElementType.TREE, id, revenue);
+        }
+        break;
+      case FactorType.SOCIAL:
+        if (score > 0.5) {
+          this.addElements(ElementType.SHEEP, 1, id);
+          // this.renderCaret(ElementType.SHEEP, id, revenue);
+          this.addElements(ElementType.CHICKEN, 1, id);
+          // this.renderCaret(ElementType.CHICKEN, id, revenue);
+        } else {
+          this.addElements(ElementType.WOLF, 1, id);
+          // this.renderCaret(ElementType.WOLF, id, revenue);
+          this.addElements(ElementType.BUG, 1, id);
+          // this.renderCaret(ElementType.BUG, id, revenue);
+        }
+        break;
+      case FactorType.GOVERNANCE:
+        if (score > 0.5) {
+          this.addElements(ElementType.RANGER, 1, id);
+          // this.renderCaret(ElementType.RANGER, id, revenue);
+          this.addElements(ElementType.PLANT, 1, id);
+          // this.renderCaret(ElementType.PLANT, id, revenue);
+        } else {
+          this.addElements(ElementType.ROCK, 1, id);
+          // this.renderCaret(ElementType.ROCK, id, revenue);
+          this.addElements(ElementType.DEBRIS, 1, id);
+          // this.renderCaret(ElementType.DEBRIS, id, revenue);
+        }
+    }
   }
 
-  override elementFactory(elementType: ElementType, id: string): Sprite {
+  renderCaret(elementType: ElementType, id: string, revenue: number): void {
+    let caret: Sprite | null = null;
+    const prop = this.application.stage.getChildByLabel(`${elementType}@${id}`);
+    if (prop === null) {
+      return;
+    }
+    const caretTextureIndex: CaretType = this.caretService.getCaretTextureIndex(revenue);
+    caret = this.caretService.renderCaret(
+      prop.x + prop.width * 0.65,
+      prop.y + 10,
+      id,
+      caretTextureIndex
+    );
+    caret.eventMode = 'dynamic';
+    this.application.stage.addChild(caret);
+  }
+
+  protected override elementFactory(elementType: ElementType, id: string): Sprite {
     switch (elementType) {
       case ElementType.TREE:
         return this.treeService.render(id);
@@ -77,6 +137,12 @@ export class GroundStageComponent extends BaseStageComponent {
         return this.debrisService.render(id);
       case ElementType.DOG:
         return this.dogService.render(id);
+      case ElementType.BUG:
+        return this.bugService.render(id);
+      case ElementType.WOLF:
+        return this.wolfService.render(id);
+      case ElementType.CHICKEN:
+        return this.chickenService.render(id);
       default:
         return super.elementFactory(elementType, id);
     }
@@ -84,8 +150,6 @@ export class GroundStageComponent extends BaseStageComponent {
 
   override badScoreView() {
     this.clearScene();
-
-    this.application.stage.getChildAt(0);
 
     this.backgroundAsset = 'desertTexture';
 
@@ -105,12 +169,12 @@ export class GroundStageComponent extends BaseStageComponent {
     this.treeService.changeTreeTextureToDead();
     this.addElements(ElementType.TREE, 20);
     this.addElements(ElementType.ROCK, 15);
+    this.addElements(ElementType.WOLF, 5);
+    this.addElements(ElementType.BUG, 5);
   }
 
   override goodScoreView() {
     this.clearScene();
-
-    this.application.stage.getChildAt(0);
 
     this.backgroundAsset = 'greenGrassTexture2';
 
@@ -132,7 +196,7 @@ export class GroundStageComponent extends BaseStageComponent {
     this.addElements(ElementType.TREE, 30);
     this.addElements(ElementType.SHEEP, 5);
     this.addElements(ElementType.RANGER, 1);
-    this.addElements(ElementType.DOG, 1);
+    this.addElements(ElementType.CHICKEN, 5);
     this.addElements(ElementType.PLANT, 30);
   }
 }

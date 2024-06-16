@@ -30,38 +30,34 @@ export class OverlayService {
       new ComponentPortal(PropDetailsComponent, viewContainerRef, injector)
     );
 
-    this.componentRef.setInput('name', propDetails.ISIN_BC);
+    this.componentRef.setInput('label', propDetails.ISIN_BC);
 
-    setTimeout(() => {
-      this.listenForClickOutside();
-    });
+    this.listenForClickOutside();
   }
 
   private listenForClickOutside(): void {
-    fromEvent<MouseEvent>(document, 'click')
+    fromEvent<MouseEvent>(document, 'mousedown')
       .pipe(
         filter((event: MouseEvent): boolean => {
-          const clickTarget = event.target as HTMLElement;
+          const clickTarget: HTMLElement = event.target as HTMLElement;
           if (this.overlayRef) {
-            console.log(this.overlayRef.overlayElement.contains(clickTarget));
-            return (
-              clickTarget != this.overlayRef.overlayElement &&
-              !!this.overlayRef &&
-              !this.overlayRef.overlayElement.contains(clickTarget)
-            );
+            return !this.overlayRef.overlayElement.contains(clickTarget);
           }
-          return true;
+          return false;
         }),
         first()
       )
       .subscribe(() => {
-        console.log('zzz');
-        if (this.overlayRef) {
-          this.overlayRef.dispose();
-          this.overlayRef = null;
-          this.componentRef = null;
-        }
+        this.closeOverlay();
       });
+  }
+
+  private closeOverlay(): void {
+    if (this.overlayRef) {
+      this.overlayRef.dispose();
+      this.overlayRef = null;
+      this.componentRef = null;
+    }
   }
 
   private getOverlayConfig(x: number, y: number): OverlayConfig {

@@ -9,13 +9,13 @@ import { getRandomInteger } from '../../../../shared/utils/get-random-integer.fu
 })
 export class RockService extends PropsBaseService {
   rocksTextures: Texture[] = [
-    this.assetsService.getTexture('rock1') as Texture,
-    this.assetsService.getTexture('rock2') as Texture
+    this.textureService.getTexture('rock1') as Texture,
+    this.textureService.getTexture('rock2') as Texture
   ];
 
   override type: ElementType = ElementType.ROCK;
 
-  override texture: Texture = this.assetsService.getTexture('rock1') as Texture;
+  override texture: Texture = this.textureService.getTexture('rock1') as Texture;
 
   override render(id: string): Sprite {
     this.texture = this.rocksTextures[getRandomInteger(0, 4)];

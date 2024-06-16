@@ -1,5 +1,4 @@
 import {
-  AfterViewChecked,
   Component,
   ElementRef,
   inject,
@@ -28,10 +27,10 @@ import { SkyStageComponent } from './stage/components/sky-stage/sky-stage.compon
 import { GroundStageComponent } from './stage/components/ground-stage/ground-stage.component';
 import { MatButton } from '@angular/material/button';
 import { NgStyle } from '@angular/common';
-import { OverlayRef } from '@angular/cdk/overlay';
 import { PropDetailsService } from './stage/services/prop-detail/prop-details.service';
 import { PropDetails } from './stage/models/prop-details.interface';
 import { OverlayService } from './stage/services/overlay/overlay.service';
+import { FactorType } from './stage/models/esg.enum';
 
 @Component({
   selector: 'app-root',
@@ -50,14 +49,12 @@ import { OverlayService } from './stage/services/overlay/overlay.service';
     NgStyle
   ]
 })
-export class AppComponent implements OnInit, AfterViewChecked {
+export class AppComponent implements OnInit {
   @ViewChild(SkyStageComponent) skyStage!: SkyStageComponent;
 
   @ViewChild(GroundStageComponent) groundStage!: GroundStageComponent;
 
   @ViewChildren(MatButton, { read: ElementRef }) buttons!: QueryList<ElementRef>;
-
-  overlayRef: OverlayRef | null = null;
 
   private readonly overlayService: OverlayService = inject(OverlayService);
 
@@ -86,10 +83,6 @@ export class AppComponent implements OnInit, AfterViewChecked {
     this.listenForStageClicks();
   }
 
-  ngAfterViewChecked() {
-    console.log('ngAfterViewChecked');
-  }
-
   listenForStageClicks(): void {
     this.propDetailsService.propDetails$.subscribe((propDetails: PropDetails) => {
       this.overlayService.create(propDetails, this.viewContainerRef, this.injector);
@@ -106,26 +99,55 @@ export class AppComponent implements OnInit, AfterViewChecked {
       .afterClosed()
       .pipe(
         first(),
-        switchMap((isinBcCode: string) =>
+        switchMap((ISIN_BC: string) =>
           forkJoin([
-            this.manufacturerService.getManufacturerRevenue(isinBcCode),
-            this.manufacturerService.getManufacturerEsgScore(isinBcCode)
+            this.manufacturerService.getManufacturerRevenue(ISIN_BC),
+            this.manufacturerService.getManufacturerEsgScore(ISIN_BC)
           ])
         )
       )
-      .subscribe(([revenue, esgScore]: [RevenueDto, EsgScoreDto]): void => {
+      .subscribe(([manufacturerRevenue, esgScore]: [RevenueDto, EsgScoreDto]): void => {
         const walletManufacturer: WalletManufacturer = {
-          ISIN_BC: revenue.ISIN_BC,
-          companyLongName: revenue.companyLongName,
-          listingShortName: revenue.listingShortName,
-          revenue: revenue.revenue,
+          ISIN_BC: manufacturerRevenue.ISIN_BC,
+          companyLongName: manufacturerRevenue.companyLongName,
+          listingShortName: manufacturerRevenue.listingShortName,
+          revenue: manufacturerRevenue.revenue,
           environmental: esgScore.environmental,
           social: esgScore.social,
           governance: esgScore.governance
         } satisfies WalletManufacturer;
 
         this.walletService.addManufacturer(walletManufacturer);
-        console.log('Wallet manufacturer', walletManufacturer);
+
+        this.skyStage.renderElements(
+          FactorType.ENVIRONMENTAL,
+          esgScore.environmental,
+          manufacturerRevenue.ISIN_BC,
+          manufacturerRevenue.revenue
+        );
+
+        this.groundStage.renderElements(
+          FactorType.ENVIRONMENTAL,
+          esgScore.environmental,
+          manufacturerRevenue.ISIN_BC,
+          manufacturerRevenue.revenue
+        );
+
+        this.groundStage.renderElements(
+          FactorType.SOCIAL,
+          esgScore.social,
+          manufacturerRevenue.ISIN_BC,
+          manufacturerRevenue.revenue
+        );
+
+        this.groundStage.renderElements(
+          FactorType.GOVERNANCE,
+          esgScore.governance,
+          manufacturerRevenue.ISIN_BC,
+          manufacturerRevenue.revenue
+        );
+
+        // this.groundStage.console.log('Wallet manufacturer', walletManufacturer);
       });
   }
 

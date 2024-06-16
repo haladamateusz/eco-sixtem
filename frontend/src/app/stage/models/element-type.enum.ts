@@ -7,5 +7,8 @@ export enum ElementType {
   PLANT = 'plant',
   ROCK = 'rock',
   DEBRIS = 'debris',
+  WOLF = 'wolf',
+  BUG = 'bug',
+  CHICKEN = 'chicken',
   DEFAULT = 'default'
 }

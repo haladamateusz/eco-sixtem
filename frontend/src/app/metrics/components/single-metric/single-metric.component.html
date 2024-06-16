@@ -1,10 +1,10 @@
 <div class="d-flex align-items-center ps-1 mt-2">
   <img [ngSrc]="metric.icon" [alt]="metric.name" width="25" height="25" />
-  @if (metric.caret === CaretType.NO_CHANGE) {
+  @if (metric.caret === EsgCaretIcon.NO_CHANGE) {
     <span class="mx-3">-</span>
-    <span> {{ metric. value}}</span>
+    <span> {{ metric.value }}</span>
   } @else if (metric.value) {
     <img class="mx-3" [ngSrc]="metric.caret" alt="Caret" width="20" height="20" />
-    <span> {{ metric.value }}</span>
+    <span> {{ metric.value }} </span>
   }
 </div>

@@ -25,7 +25,9 @@ export class TextureService {
     plant1: 'assets/stage/ground/plants/plant1.png',
     plant2: 'assets/stage/ground/plants/plant2.png',
     plant3: 'assets/stage/ground/plants/plant3.png',
-    plant4: 'assets/stage/ground/plants/plant4.png'
+    plant4: 'assets/stage/ground/plants/plant4.png',
+    flower1: 'assets/stage/ground/plants/flower1.png',
+    flower2: 'assets/stage/ground/plants/flower2.png'
   };
 
   private treeAssets: { [key: string]: string } = {
@@ -36,7 +38,13 @@ export class TextureService {
 
   private animalAssets: { [key: string]: string } = {
     dog: 'assets/stage/ground/animals/dog.png',
-    sheep: 'assets/stage/ground/animals/sheep.png'
+    sheep1: 'assets/stage/ground/animals/sheep1.png',
+    sheep2: 'assets/stage/ground/animals/sheep2.png',
+    wolf: 'assets/stage/ground/animals/wolf.png',
+    bug: 'assets/stage/ground/animals/bug.png',
+    ant: 'assets/stage/ground/animals/ant.png',
+    chicken: 'assets/stage/ground/animals/chicken.png',
+    vermin: 'assets/stage/ground/animals/vermin.png'
   };
 
   private rockAssets: { [key: string]: string } = {
@@ -46,6 +54,7 @@ export class TextureService {
 
   private skyAssets: { [key: string]: string } = {
     skyboxTexture: 'assets/stage/sky/skybox.png',
+    skyboxPollutedTexture: 'assets/stage/sky/skybox_polluted.png',
     healthyCloudTexture: 'assets/stage/sky/cloud_healthy.png',
     pollutedCloudTexture: 'assets/stage/sky/cloud_polluted.png'
   };
@@ -58,6 +67,15 @@ export class TextureService {
     ranger: 'assets/stage/ground/ranger.png'
   };
 
+  private caretAssets: { [key: string]: string } = {
+    caret_one_up_stroke: 'assets/carets/one_up_stroke.svg',
+    caret_one_down_stroke: 'assets/carets/one_down_stroke.svg',
+    caret_two_up_stroke: 'assets/carets/two_up_stroke.svg',
+    caret_two_down_stroke: 'assets/carets/two_down_stroke.svg',
+    caret_three_up_stroke: 'assets/carets/three_up_stroke.svg',
+    caret_three_down_stroke: 'assets/carets/three_down_stroke.svg'
+  };
+
   async loadAssets(): Promise<void> {
     const assets: { [key: string]: string } = {
       ...this.grassAssets,
@@ -68,7 +86,8 @@ export class TextureService {
       ...this.rockAssets,
       ...this.skyAssets,
       ...this.missingAssets,
-      ...this.rangerAssets
+      ...this.rangerAssets,
+      ...this.caretAssets
     };
 
     for (const [name, path] of Object.entries(assets)) {

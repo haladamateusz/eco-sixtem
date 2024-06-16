@@ -8,7 +8,7 @@ import { PropDetailsService } from '../prop-detail/prop-details.service';
   providedIn: 'root'
 })
 export class PropsBaseService {
-  protected readonly assetsService: TextureService = inject(TextureService);
+  protected readonly textureService: TextureService = inject(TextureService);
 
   protected readonly propDetailService: PropDetailsService = inject(PropDetailsService);
 
@@ -16,7 +16,7 @@ export class PropsBaseService {
 
   type: ElementType = ElementType.DEFAULT;
 
-  texture: Texture = this.assetsService.getTexture('') as Texture;
+  texture: Texture = this.textureService.getTexture('') as Texture;
 
   render(id: string): Sprite {
     let sprite: Sprite = new Sprite(this.texture);
@@ -27,7 +27,6 @@ export class PropsBaseService {
 
     sprite.onclick = (event: FederatedPointerEvent): void => {
       event.preventDefault();
-      console.log(event.target.label, event.x, event.y);
       this.propDetailService.propClicked({
         x: event.x,
         y: event.y,

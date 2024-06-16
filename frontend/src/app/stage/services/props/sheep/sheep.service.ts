@@ -9,5 +9,5 @@ import { Texture } from 'pixi.js';
 export class SheepService extends PropsBaseService {
   override type: ElementType = ElementType.SHEEP;
 
-  override texture: Texture = this.assetsService.getTexture('sheep') as Texture;
+  override texture: Texture = this.textureService.getTexture('sheep2') as Texture;
 }

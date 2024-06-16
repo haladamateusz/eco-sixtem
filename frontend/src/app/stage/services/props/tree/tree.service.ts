@@ -8,15 +8,15 @@ import { ElementType } from '../../../models/element-type.enum';
 })
 export class TreeService extends PropsBaseService {
   treeTextures: Texture[] = [
-    this.assetsService.getTexture('treeHealthy') as Texture,
-    this.assetsService.getTexture('treeDying') as Texture,
-    this.assetsService.getTexture('treeDead') as Texture
+    this.textureService.getTexture('treeHealthy') as Texture,
+    this.textureService.getTexture('treeDying') as Texture,
+    this.textureService.getTexture('treeDead') as Texture
   ];
   override scale: number = 0.25;
 
   override type: ElementType = ElementType.TREE;
 
-  override texture: Texture = this.assetsService.getTexture('treeHealthy') as Texture;
+  override texture: Texture = this.textureService.getTexture('treeHealthy') as Texture;
 
   changeTreeTextureToDead(): void {
     this.texture = this.treeTextures[2];

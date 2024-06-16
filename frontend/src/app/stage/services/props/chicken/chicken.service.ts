@@ -6,8 +6,8 @@ import { ElementType } from '../../../models/element-type.enum';
 @Injectable({
   providedIn: 'root'
 })
-export class DogService extends PropsBaseService {
-  override texture: Texture = this.textureService.getTexture('dog') as Texture;
+export class ChickenService extends PropsBaseService {
+  override texture: Texture = this.textureService.getTexture('chicken') as Texture;
 
-  override type: ElementType = ElementType.DOG;
+  override type: ElementType = ElementType.CHICKEN;
 }

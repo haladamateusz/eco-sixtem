@@ -9,16 +9,19 @@ import { getRandomInteger } from '../../../../shared/utils/get-random-integer.fu
 })
 export class PlantService extends PropsBaseService {
   plantTextures: Texture[] = [
-    this.assetsService.getTexture('plant1') as Texture,
-    this.assetsService.getTexture('plant2') as Texture,
-    this.assetsService.getTexture('plant3') as Texture,
-    this.assetsService.getTexture('plant4') as Texture
+    this.textureService.getTexture('plant1') as Texture,
+    this.textureService.getTexture('plant2') as Texture,
+    this.textureService.getTexture('plant3') as Texture,
+    this.textureService.getTexture('plant4') as Texture,
+    this.textureService.getTexture('flower1') as Texture,
+    this.textureService.getTexture('flower2') as Texture
   ];
 
   override type: ElementType = ElementType.PLANT;
 
   override render(id: string): Sprite {
-    this.texture = this.plantTextures[getRandomInteger(0, 4)];
+    const textureIndex: number = getRandomInteger(0, this.plantTextures.length);
+    this.texture = this.plantTextures[textureIndex];
     return super.render(id);
   }
 }

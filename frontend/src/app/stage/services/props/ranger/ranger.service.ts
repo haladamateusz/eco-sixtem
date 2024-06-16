@@ -11,7 +11,7 @@ export class RangerService extends PropsBaseService {
 
   override scale: number = 0.75;
 
-  override texture: Texture = this.assetsService.getTexture('ranger') as Texture;
+  override texture: Texture = this.textureService.getTexture('ranger') as Texture;
 
   //TODO: add ranger click event
 }

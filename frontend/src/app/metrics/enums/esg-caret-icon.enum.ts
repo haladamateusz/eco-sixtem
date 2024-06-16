@@ -1,4 +1,4 @@
-export enum CaretType {
+export enum EsgCaretIcon {
   THREE_UP = 'assets/carets/three_up.svg',
   TWO_UP = 'assets/carets/two_up.svg',
   ONE_UP = 'assets/carets/one_up.svg',
