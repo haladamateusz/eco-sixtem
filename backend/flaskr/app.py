@@ -1,14 +1,15 @@
-import pandas as pd
 import datetime
+
+import pandas as pd
 from flask import Flask
 from flask_cors import CORS
-from six_api.financial_data import FinancialDataAPI
 from pydash import get
+from six_api.financial_data import FinancialDataAPI
 
 app = Flask(__name__)
 CORS(app)
 
-findata = FinancialDataAPI('/Users/mateuszhalada/Hackaton_St_Gallen/eco-sixtem/backend/flaskr/certificates')
+findata = FinancialDataAPI('./certificates')
 
 
 def get_day_month_ago():

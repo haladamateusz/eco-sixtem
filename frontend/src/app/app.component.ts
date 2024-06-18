@@ -16,7 +16,7 @@ import { WalletComponent } from './wallet/components/wallet-shell/wallet.compone
 import { SingleAssetComponent } from './wallet/components/single-asset/single-asset.component';
 import { WelcomeModalComponent } from './modals/welcome-modal/welcome-modal.component';
 import { PlantSaplingModalComponent } from './modals/plant-sappling-modal/plant-sapling-modal.component';
-import { first, forkJoin, switchMap } from 'rxjs';
+import {filter, first, forkJoin, switchMap} from 'rxjs';
 import { ManufacturerService } from './shared/service/manufacturer/manufacturer.service';
 import { WalletService } from './shared/service/wallet/wallet.service';
 import { WalletManufacturer } from './shared/model/manufacturer/wallet-manufacturer.interface';
@@ -99,6 +99,7 @@ export class AppComponent implements OnInit {
       .afterClosed()
       .pipe(
         first(),
+          filter((ISIN_BC: string) => !!ISIN_BC),
         switchMap((ISIN_BC: string) =>
           forkJoin([
             this.manufacturerService.getManufacturerRevenue(ISIN_BC),
