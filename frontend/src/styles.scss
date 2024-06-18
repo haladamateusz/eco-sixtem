@@ -3,7 +3,6 @@
 // For more information: https://material.angular.io/guide/theming
 @use '@angular/material' as mat;
 // Plus imports for other components in your app.
-@import "bootstrap-icons/font/bootstrap-icons.css";
 @import './assets/primary';
 // Include the common styles for Angular Material. We include this here so that you only
 // have to load a single css file for Angular Material in your app.
@@ -13,15 +12,15 @@
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
-$eco-sixtem-primary: mat.define-palette($red-palette);
-$eco-sixtem-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+$eco-sixtem-primary: mat.m2-define-palette($red-palette);
+$eco-sixtem-accent: mat.m2-define-palette(mat.$m2-pink-palette, A200, A100, A400);
 
 // The warn palette is optional (defaults to red).
-$eco-sixtem-warn: mat.define-palette(mat.$red-palette);
+$eco-sixtem-warn: mat.m2-define-palette(mat.$m2-red-palette);
 
 // Create the theme object. A theme consists of configurations for individual
 // theming systems such as "color" or "typography".
-$eco-sixtem-theme: mat.define-light-theme((
+$eco-sixtem-theme: mat.m2-define-light-theme((
   color: (
     primary: $eco-sixtem-primary,
     accent: $eco-sixtem-accent,
@@ -37,92 +36,12 @@ $eco-sixtem-theme: mat.define-light-theme((
 /* You can add global styles to this file, and also import other style files */
 
 :root{
-  --font-size: 18px;
-  --text-color: white;
-  --background-color: #007bff;
-  --background-color-grey: #F3EAEA;
+  --font-size: 1.125rem;
 }
 
 
-html, body { height: 100%; }
+html, body { height: 100%; background: #f0f0f0;}
 body {
   margin: 0;
-  // font-family: Roboto, "Helvetica Neue", sans-serif;
-  font-family: "Helvetica Neue";
-}
-
-
-h1 {
-  padding: 40px;
-}
-
-.nav-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-direction: row;
-  height: 100%;
-  // background-color: red;
-  border-color: white;
-  // font-family: vt323;
-}
-
-.logo img {
-  height: 40px; /* Adjust height of the logo */
-}
-
-.nav-buttons {
-  display: flex;
-  padding: 10px;
-}
-
-
-.button-with-logo {
-  font-size: 20px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 15px;
-  border-radius: 20px;
-  border: none;
-  color: black;  /* Example text color */
-  cursor: pointer;
-  background-color: white;
-  transition: background-color 0.3s ease;
-}
-
-.button-with-logo:hover {
-  background-color: #F3EAEA; /* Example hover color */
-}
-
-.logo {
-  margin-right: 8px; /* Adjust spacing between logo and text */
-  margin-left: 8px;
-}
-
-.text {
-  font-weight: bold;
-}
-
-
-.main-container {
-  position: relative;
-}
-
-.sidebar-button {
-  position: absolute;
-  border-radius: 15px;
-  border-color: var(--background-color-grey);
-  background-color: var(--background-color-grey);
-  top: 15px; /* Adjust as needed */
-  right: 15px; /* Adjust as needed */
-  z-index: 1; /* Ensure the button appears above other elements */
-  font-family: vt323;
-}
-
-.component {
-  width: 200px;
-  height: 150px;
-  background-color: lightgray;
-  margin-top: 50px; /* Add margin to create space for the button */
+  font-family: "Roboto", "Helvetica Neue", sans-serif;
 }

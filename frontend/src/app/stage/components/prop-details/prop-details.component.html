@@ -1,0 +1,9 @@
+<p><b>Fund:</b> {{manufacturer?.companyLongName}}</p>
+@if(spriteType === 'tree') {
+<p class="mb-0"><b>E-Score:</b> {{manufacturer?.environmental}}</p>
+<p class="mb-0"><b>S-Score:</b> {{manufacturer?.social}}</p>
+<p class="mb-0"><b>G-Score:</b> {{manufacturer?.governance}}</p>
+} @else {
+<p class="mb-0"><b>Factor:</b> {{ factor }}</p>
+<p><b>Score:</b> {{ score }}</p>
+}

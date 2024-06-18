@@ -2,15 +2,22 @@ body {
   background: black;
 }
 
-.canvas-container {
-  border-radius: 20px;
-  // margin: 100px;
-  background-color: white;
-  border: 1px solid #000;
-  // overflow: hidden;
+.btn {
+  font-weight: 500;
+  //background: linear-gradient(90deg, rgba(100,175,83,1) 0%, rgba(116,216,93,1) 100%);
+  border: none;
+  padding: 10px 20px;
+  margin: 0 5px;
+  border-radius: 30px;
+  cursor: pointer;
 }
 
-// .canvas-container > div {
-//   height: 200px;
-//   background-color: red;
-// }
+
+.btn-sapling {
+  color: white;
+  background: rgb(0, 224, 0) !important;
+  &:hover {
+    background: rgb(75, 133, 63);
+    background: linear-gradient(90deg, rgba(90, 153, 63, 1) 0%, rgba(100, 189, 80, 1) 100%);
+  }
+}

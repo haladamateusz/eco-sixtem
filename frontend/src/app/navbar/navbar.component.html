@@ -1,16 +1,23 @@
-<nav class="navbar">
-  <div class="container">
-    <a class="navbar-brand" href="#">My Angular App</a>
-    <ul class="navbar-nav">
-      <li class="nav-item">
-        <a class="nav-link" href="#">Home</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">About</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Contact</a>
-      </li>
-    </ul>
+<nav class="navbar bg-white shadow">
+  <div class="container-fluid">
+    <a class="navbar-brand">
+      <img
+        priority="true"
+        [ngSrc]="'assets/eco_sixtem_logo.svg'"
+        alt="Logo"
+        width="220"
+        height="40"
+      />
+    </a>
+    <div class="d-flex">
+      <button class="btn" type="submit">
+        <img [ngSrc]="'assets/navbar-icons/globe.svg'" alt="globe" height="20" width="20" />
+        <span class="ms-2">Ecosystem</span>
+      </button>
+      <button class="btn" type="submit">
+        <img [ngSrc]="'assets/navbar-icons/star.svg'" alt="star" height="20" width="20" />
+        <span class="ms-2">Leaderboard</span>
+      </button>
+    </div>
   </div>
 </nav>

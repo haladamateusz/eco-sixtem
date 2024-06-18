@@ -1,0 +1,13 @@
+<div>
+  <h3>Metrics</h3>
+  @if (revenue$ | async; as revenue) {
+    <app-single-metric [metric]="revenue" />
+  }
+</div>
+<div class="mt-4">
+  <h4>ESG Factors</h4>
+
+  @for (metric of esgScore$| async;  track metric.name) {
+    <app-single-metric [metric]="metric" />
+  }
+</div>

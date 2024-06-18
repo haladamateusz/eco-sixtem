@@ -1,0 +1,4 @@
+<div class="d-flex align-items-center ps-1 mt-2">
+  <img (click)=remove() [ngSrc]="'assets/wallet/remove.svg'" width="20" height="20" alt="remove" />
+  <span [matTooltip]="asset.companyLongName" matTooltipPosition="right" class="ms-2"> {{ asset.listingShortName }}</span>
+</div>
